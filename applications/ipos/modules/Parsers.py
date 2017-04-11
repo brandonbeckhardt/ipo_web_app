@@ -23,10 +23,7 @@ class MarketWatchParser(HTMLParser):
 
 		page = requests.get('http://www.marketwatch.com/tools/ipo-calendar')
 		contents = page.content
-		print 'contents ='
-		print contents
 		self.feed(contents)
-		print self.ipos
 
 	def handle_starttag(self, tag, attrs):
 		attributes =  dict(attrs)
