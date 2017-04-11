@@ -1,0 +1,208 @@
+.section{
+	border: 1px solid black;
+}
+
+body{
+	font-family: 'Ubuntu', sans-serif;
+}
+label{
+	margin-right: 10px;
+}
+#text_input{
+  width: 90%;
+  height: 80%;
+}
+
+.selected_ipo_wrapper{
+
+}
+.ipo_table{
+	width: 100%;
+}
+.ipo_table>tbody>tr>td {
+	text-align: center;
+	padding: 5px;
+}
+.ipo_table th{
+}
+.ipo_table td{
+	border: 1px dotted #bbc;
+}
+.table_wrapper{
+	border:  1px dotted #bbc;
+    margin-bottom: 70pt; 
+    margin-top: 40pt; 
+}
+	
+.pricing{
+	display:block;
+}
+.main_wrapper{
+	width:85%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.generic_wrapper{
+	padding: 35px 50px;
+    margin-bottom: 14px;
+    background-color: #f7f7f9;
+    border: 1px solid #e1e1e8;
+    border-radius: 4px;
+    width: 100%;
+}
+.drop_down{
+	width: 30%;
+}
+.same_line {
+	display: inline;
+}
+/*ipo form page*/
+.ipo_form_wrapper{
+	width: 35%;
+	float: right;
+}
+.ipo_form_input{
+	margin: 1% 1% 0% 3%;
+}
+/*New user page*/
+.new_user_form{
+	width: 70%;
+	margin-left: 10%;
+}
+.new_user_form div{
+	margin: 15px;
+}
+.submit_button{
+	width: 150px;
+	margin: 20px 140px 100px 20px;
+	float: right;
+
+}
+.specific_page_header{
+	font-size: 20pt;
+	margin-bottom: 10px;
+	margin-bottom: 10px;
+}
+.left_text_align{
+	text-align: left;
+}
+.right_text_align{
+	text-align:right;
+}
+.table_checkbox{
+	width: 10pt;
+	padding-right: 10pt;
+}
+
+.generic_table>tbody>tr>td{
+	border:none;
+}
+.generic_table>tbody>tr>th{
+	border:none;
+	text-align: center;
+}
+.generic_table{
+	border-collapse: collapse;
+	padding: 5px;
+	border: none;	
+}
+.generic_table table>tbody>td>td {
+	border: none;	
+}
+.generic_table th{
+	border: none;
+}
+.left_aligned_table tbody>tr>th,tbody>tr>td {
+	text-align: left;
+}
+#address_and_payment_row{
+	height: 20em;
+}
+.fill_height{
+	height: 100%;
+}
+#checkout_button{
+	width: auto;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 2em;
+    margin-bottom: 3em;
+}
+
+
+.responsive_table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+.responsive_table button{
+	width: auto;
+}
+.save_for_later_or_delete{
+	width: auto;
+
+}
+.save_for_later_or_delete button{
+	display:inline-block; 
+}
+
+
+/*What to do with mobile_show when are are not on mobile*/
+label.mobile_show {
+	display: none;
+}
+
+/*What to do with mobile hide when in mobile*/
+label.mobile_hide {
+	display: inline;
+}
+
+/* 
+Max width before this PARTICULAR table gets nasty
+This query will take effect for any screen smaller than 760px
+and also iPads specifically.
+*/
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* Force table to not be like tables anymore */
+	.responsive_table, .responsive_table thead, .responsive_table tbody, .responsive_table th, .responsive_table td, .responsive_table tr { 
+		display: block; 
+	}
+	
+	tr { border: 1px solid #ccc; }
+	
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	/*What to do with mobile show when in mobile*/
+	label.mobile_show {
+		display:inline;
+	}
+	/*What to do with mobile hide when in mobile*/
+	label.mobile_hide {
+		display: none;
+	}
+	tr.mobile_hide{
+		display: none;
+	}
+}
+
+
+
+

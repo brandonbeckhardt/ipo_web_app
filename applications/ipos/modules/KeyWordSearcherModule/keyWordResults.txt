@@ -1,0 +1,24 @@
+{
+    "next_week": {
+        "Tocagen": {
+            "description": "tocagen, inc. operates as a clinical-stage, cancer-selective gene therapy company. the company focuses on developing treatment of cancer using cancer-selective gene therapy products based on retroviral gene therapy platforms. tocagen serves patients in the united states.", 
+            "keyWordMatches": [
+                "develop"
+            ]
+        }, 
+        "Vantage Energy Acquisition": {
+            "description": "vantage energy acquisition corp. operates as a special purpose acquisition company. the company aims to acquire one and more businesses and assets, via a merger, capital stock exchange, asset acquisition, stock purchase, and reorganization. vantage energy acquisition focuses on acquiring a target business in the upstream oil and gas industry in north america.", 
+            "keyWordMatches": [
+                "api"
+            ]
+        }
+    }, 
+    "this_week": {
+        "Forum Merger Corporation": {
+            "description": "forum merger corporation operates as a special purpose acquisition company. the company aims to acquire one and more businesses and assets, via a merger, capital stock exchange, asset acquisition, stock purchase, and reorganization.", 
+            "keyWordMatches": [
+                "api"
+            ]
+        }
+    }
+}
