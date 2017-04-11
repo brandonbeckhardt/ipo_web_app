@@ -8,7 +8,7 @@
 # - download is for downloading files uploaded in the db (does streaming)
 # -------------------------------------------------------------------------
 
-from KeyWordSearcherModule.KeyWordSearcher import KeyWordSearcher
+from KeyWordSearcher import KeyWordSearcher
 import json
 import os
 
