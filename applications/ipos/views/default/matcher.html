@@ -11,53 +11,53 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-3">
-				<form action="submit_keyword_input" method="post">
-				<textarea id="text_input" name="text_input" rows="10">{{=text_area_input}}</textarea>
-				<input type="submit">
-				</form>
-				<form action="submit_keyword_input" method="post">
-					<input type="hidden" name="clear_text_input" value="clear_text_input">
-				<input type="submit" value="Clear Text">
-				</form>
-			</div>
-			<div class="col-sm-9">
-				{{if 'matches' in globals():}}
-				    <!-- LOCAL INFORMATION -->
-					{{for group in groups:}}
-						{{group_label = group[0]}}
-						{{group_identifier = group[1]}}
-			
-					 	<div class="well">
-						    <h3>{{=group_label}}</h3>
-						    {{if matches and group_identifier in matches.keys():}}
-								{{if len(matches[group_identifier])>0:}}
-									<table class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
-							            <tr class="mobile_hide">
-							            	 <th><label class="mobile_hide">Company Name </label></th>
-							            	 <th><label class="mobile_hide">Company Description</label></th>
-							            	 <th><label class="mobile_hide">Matched Key Words</label></th>
-							            </tr>
-										{{for match in matches[group_identifier]:}}
-											<tr>
-												<td><label class="mobile_show">Company Name  </label>{{=match['company_name']}}</td>
-												<td><label class="mobile_show">Company Description </label>{{=match['description']}}</td>
-												<td><label class="mobile_show">Matched Key Words </label>{{for idx, keyWord in enumerate(match['keyWordMatches']):}}
-														{{=keyWord}}{{if idx != len(match['keyWordMatches'])-1:}},{{pass}}
-													{{pass}}
-												</td>
-											</tr>
-										{{pass}}
-									</table>
-								{{else:}}
-									No matches
+			<form action="submit_keyword_input" method="post">
+				<div class="col-sm-3">
+					<textarea id="text_input" name="text_input" rows="10">{{=text_area_input}}</textarea>
+					<button type="submit" name="post_form" value="submit" class="btn btn-primary">Submit</button>
+					<button type="submit" name="post_form" value="clear_text" class="btn btn-primary">Clear Text</button>
+				</div>
+				<div class="col-sm-9">
+					{{if 'matches' in globals():}}
+					    <!-- LOCAL INFORMATION -->
+						{{for group in groups:}}
+							{{group_label = group[0]}}
+							{{group_identifier = group[1]}}
+				
+						 	<div class="well">
+							    <h3>{{=group_label}}</h3>
+							    {{if group_identifier == 'future':}}
+									<div><input type="checkbox" name="search_future">Future has many companies, but takes a while to load.  Check this box to search for future and resubmit</div>
 								{{pass}}
-							{{else:}}
-								Did not search for {{=group_label.lower()}}
-							{{pass}}
-						</div>
+							    {{if matches and group_identifier in matches.keys():}}
+									{{if len(matches[group_identifier])>0:}}
+										<table class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
+								            <tr class="mobile_hide">
+								            	 <th><label class="mobile_hide">Company Name </label></th>
+								            	 <th><label class="mobile_hide">Company Description</label></th>
+								            	 <th><label class="mobile_hide">Matched Key Words</label></th>
+								            </tr>
+											{{for match in matches[group_identifier]:}}
+												<tr>
+													<td><label class="mobile_show">Company Name  </label>{{=match['company_name']}}</td>
+													<td><label class="mobile_show">Company Description </label>{{=match['description']}}</td>
+													<td><label class="mobile_show">Matched Key Words </label>{{for idx, keyWord in enumerate(match['keyWordMatches']):}}
+															{{=keyWord}}{{if idx != len(match['keyWordMatches'])-1:}},{{pass}}
+														{{pass}}
+													</td>
+												</tr>
+											{{pass}}
+										</table>
+									{{else:}}
+										No matches
+									{{pass}}
+								{{else:}}
+									Did not search for {{=group_label.lower()}}
+								{{pass}}
+							</div>
+					{{pass}}
 				{{pass}}
-			{{pass}}
-		</div>
+			</div>
+		</form>
 	</div>
 </div>
