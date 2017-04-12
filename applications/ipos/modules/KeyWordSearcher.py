@@ -6,7 +6,8 @@ import re
 
 
 class KeyWordSearcher:
-	def __init__(self, text_input):
+	def __init__(self, text_input,search_future):
+		self.search_future = search_future
 		self.ipos = MarketWatchParser().ipos
 		self.keyWords = self.getKeyWords(text_input)
 		self.BloombergParser = BloombergParser()
@@ -27,7 +28,7 @@ class KeyWordSearcher:
 		else:
 			matches = {}
 			for group in self.ipos.keys():
-				if group == 'this_week' or group =='next_week':
+				if group == 'this_week' or group =='next_week' or (group=='future' and self.search_future):
 					matches[group] = []
 					for company_info in self.ipos[group]:
 						
