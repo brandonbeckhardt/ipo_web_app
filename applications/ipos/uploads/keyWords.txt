@@ -8,7 +8,6 @@ cyber
 security
 cloud
 mobile
-develop
 ~+~API~+~
 sequenc
 technolog
