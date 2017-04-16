@@ -8,8 +8,9 @@ import time
 
 
 class KeyWordSearcher:
-	def __init__(self, text_input,search_future):
+	def __init__(self, text_input,search_future,match_all):
 		self.search_future = search_future
+		self.match_all=match_all
 		self.ipos = MarketWatchParser().ipos
 		self.keyWords = self.getKeyWords(text_input)
 		self.matches = None
@@ -35,21 +36,25 @@ class KeyWordSearcher:
 		has_matched = False
 		if content:
 			description = content.strip()
-			lowerCaseDescription = description.lower()
-			for keyWord in self.keyWords:
-				if lowerCaseDescription.find(keyWord) > -1:
-					if has_matched:
-						company_map['keyWordMatches'] = company_map['keyWordMatches'] + [keyWord]
-					else:
-						company_map = {'company_name':company_name,'keyWordMatches':[keyWord],'description':description}
-						has_matched = True
+			if self.match_all:
+				company_map = {'company_name':company_name,'keyWordMatches':[],'description':description}
+				has_matched = True
+			else:
+				lowerCaseDescription = description.lower()
+				for keyWord in self.keyWords:
+					if lowerCaseDescription.find(keyWord) > -1:
+						if has_matched:
+							company_map['keyWordMatches'] = company_map['keyWordMatches'] + [keyWord]
+						else:
+							company_map = {'company_name':company_name,'keyWordMatches':[keyWord],'description':description}
+							has_matched = True
 		if has_matched:
 			self.matches[group].append(company_map)
 		return
 
 
 	def getMatches(self):
-		if not self.keyWords or len(self.keyWords) <= 0:
+		if not (self.keyWords or len(self.keyWords) <= 0) and not self.match_all:
 			return None
 		else:
 			self.matches = {}
