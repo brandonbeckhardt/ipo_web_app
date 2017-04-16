@@ -34,9 +34,10 @@ class KeyWordSearcher:
 		company_map = None
 		has_matched = False
 		if content:
-			description = content.strip().lower()
+			description = content.strip()
+			lowerCaseDescription = description.lower()
 			for keyWord in self.keyWords:
-				if description.find(keyWord) > -1:
+				if lowerCaseDescription.find(keyWord) > -1:
 					if has_matched:
 						company_map['keyWordMatches'] = company_map['keyWordMatches'] + [keyWord]
 					else:
