@@ -23,13 +23,9 @@ def index():
 def matcher():
     text_input = None
 
-    search_future=False
     match_all=False
-    if request.vars.has_key('search_future') and request.vars['search_future']:
-        search_future = True
     if request.vars.has_key('match_all') and request.vars['match_all'] == "true":
         match_all = True
-        search_future = True
 
     if request.vars.has_key('keyWords') and request.vars['keyWords']:
         text_input = request.vars['keyWords']
@@ -41,20 +37,17 @@ def matcher():
     time_to_expire = 60*60*24 #cache daily
     ipos = cache.disk('ipos', lambda: IpoFetcher().ipos, time_expire=time_to_expire)    
     companyData = cache.disk('companies', lambda: CompanyInformationFetcher(ipos).companies, time_expire=time_to_expire)    
-    matches = DataMatcher(text_input,search_future,match_all,companyData).matches
+    matches = DataMatcher(text_input,match_all,companyData).matches
 
     groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future")]
-    return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=text_input,search_future=search_future)
+    return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=text_input)
 
 def submit_keyword_input():
     variables={}
     if request.vars.post_form == "submit":
         variables['keyWords'] = request.vars.text_input
-        if request.vars.search_future:
-            variables['search_future']='true'
     elif request.vars.post_form =="match_all":
         variables['match_all'] = "true"
-        variables['search_future']='true'
     redirect(URL('matcher',vars=variables))
 
 

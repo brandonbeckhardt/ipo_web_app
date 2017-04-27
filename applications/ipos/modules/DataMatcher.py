@@ -6,8 +6,7 @@ import time
 
 
 class DataMatcher:
-	def __init__(self, text_input,search_future,match_all,companies):
-		self.search_future = search_future
+	def __init__(self, text_input,match_all,companies):
 		self.match_all=match_all
 		self.companies = companies
 		self.keyWords = self.getKeyWords(text_input)
@@ -56,7 +55,7 @@ class DataMatcher:
 		else:
 			self.matches = {}
 			for group in self.companies.keys():
-				if group == 'this_week' or group =='next_week' or (group=='future' and self.search_future):
+				if group == 'this_week' or group =='next_week' or group=='future':
 					self.matches[group] = []
 					# create pool					    
 					threads = []  

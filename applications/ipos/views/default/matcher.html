@@ -26,16 +26,6 @@
 				
 						 	<div class="well">
 							    <h3>{{=group_label}}</h3>
-							    {{if group_identifier == 'future':}}
-									<div>
-										{{if search_future:}}
-											<input type="checkbox" name="search_future" checked>
-										{{else:}}
-											<input type="checkbox" name="search_future">
-										{{pass}}
-										Future has many companies, but takes a while to load.  Check this box to search for future and resubmit
-									</div>
-								{{pass}}
 							    {{if matches and group_identifier in matches.keys():}}
 									{{if len(matches[group_identifier])>0:}}
 										<table class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
