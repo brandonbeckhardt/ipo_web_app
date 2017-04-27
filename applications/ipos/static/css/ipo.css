@@ -13,8 +13,8 @@ label{
   height: 80%;
 }
 
-.selected_ipo_wrapper{
-
+div.matcher_container{
+	width: 95%;
 }
 .ipo_table{
 	width: 100%;
