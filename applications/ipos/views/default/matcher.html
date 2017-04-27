@@ -4,12 +4,10 @@
 {{response.files.append(URL('static','bootstrap/ipo.css'))}}
 {{include 'web2py_ajax.html'}}
 
-{{if 'message' in globals():}}
-<h2>{{=message}}</h2>
-{{pass}}
-
-
-	<div class="container">
+	<div class="matcher_container container">
+		{{if 'message' in globals():}}
+			<h2>{{=message}}</h2>
+		{{pass}}
 		<div class="row">
 			<form action="submit_keyword_input" method="post">
 				<div class="col-sm-3">
