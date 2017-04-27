@@ -1,4 +1,5 @@
 gluon/*
 httpserver.log
+*.pyc
 parameters_8000.py
 *.pyc
