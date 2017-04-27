@@ -40,7 +40,7 @@ def matcher():
 
     time_to_expire = 60*60*24 #cache daily
     ipos = cache.disk('ipos', lambda: IpoFetcher().ipos, time_expire=time_to_expire)    
-    companyData = cache.disk('companies', lambda: CompanyInformationFetcher(ipos,search_future).companies, time_expire=time_to_expire)    
+    companyData = cache.disk('companies', lambda: CompanyInformationFetcher(ipos).companies, time_expire=time_to_expire)    
     matches = DataMatcher(text_input,search_future,match_all,companyData).matches
 
     groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future")]

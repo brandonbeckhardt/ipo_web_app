@@ -1,6 +1,5 @@
 import requests
 from HTMLParser import HTMLParser
-from Parsers import BloombergParser
 import sys
 import json
 import threading
@@ -8,9 +7,8 @@ import time
 
 
 class CompanyInformationFetcher:
-	def __init__(self, ipos,search_future):
+	def __init__(self, ipos):
 		self.ipos = ipos
-		self.search_future = search_future
 		self.getCompanyInfo()
 
 	def getParsedData(self,group,company_info):
@@ -29,7 +27,7 @@ class CompanyInformationFetcher:
 		print 'Getting company info..'
 		self.companies={}
 		for group in self.ipos.keys():
-			if group == 'this_week' or group =='next_week' or (group=='future' and self.search_future):
+			if group == 'this_week' or group =='next_week' or group=='future':
 				self.companies[group] = []
 				# create pool					    
 				threads = []  
