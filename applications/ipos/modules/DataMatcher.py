@@ -17,7 +17,8 @@ class DataMatcher:
 	def getKeyWords(self, text_input):
 		words = []
 		if text_input:
-			for word in re.split(';|,|\n',text_input.strip()):
+			# Don't remove space from split
+			for word in re.split(';|,|\n|\s+',text_input.strip()):
 				formattedWord = word.strip().lower().replace("~+~"," ")
 				if formattedWord not in words:
 					words.append(formattedWord)
