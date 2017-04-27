@@ -8,7 +8,10 @@
 # - download is for downloading files uploaded in the db (does streaming)
 # -------------------------------------------------------------------------
 
-from KeyWordSearcher import KeyWordSearcher
+from IpoFetcher import IpoFetcher
+from CompanyInformationFetcher import CompanyInformationFetcher
+from DataMatcher import DataMatcher
+
 import json
 import os
 
@@ -34,10 +37,14 @@ def matcher():
         filepath = os.path.join(request.folder, 'uploads', 'keyWords.txt')
         with open(filepath, 'r') as text_input_file:
             text_input = text_input_file.read()
-    keyWordSearcher = KeyWordSearcher(text_input,search_future,match_all)
-    keyWordMatches = keyWordSearcher.matches
+
+    time_to_expire = 60*60*24 #cache daily
+    ipos = cache.disk('ipos', lambda: IpoFetcher().ipos, time_expire=time_to_expire)    
+    companyData = cache.disk('companies', lambda: CompanyInformationFetcher(ipos,search_future).companies, time_expire=time_to_expire)    
+    matches = DataMatcher(text_input,search_future,match_all,companyData).matches
+
     groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future")]
-    return dict(message=T('IPO Matcher'),matches=keyWordMatches,groups=groups,text_area_input=text_input,search_future=search_future)
+    return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=text_input,search_future=search_future)
 
 def submit_keyword_input():
     variables={}
