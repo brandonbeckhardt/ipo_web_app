@@ -15,7 +15,7 @@
 				<div class="col-sm-3">
 					<textarea id="text_input" name="text_input" rows="10">{{=text_area_input}}</textarea>
 					<button type="submit" name="post_form" value="submit" class="btn btn-primary">Submit</button>
-					<button type="submit" name="post_form" value="clear_text" class="btn btn-primary">Clear Text</button>
+					<button type="submit" name="post_form" value="match_all" class="btn btn-primary">Search All Upcoming IPOs</button>
 				</div>
 				<div class="col-sm-9">
 					{{if 'matches' in globals():}}
@@ -27,7 +27,14 @@
 						 	<div class="well">
 							    <h3>{{=group_label}}</h3>
 							    {{if group_identifier == 'future':}}
-									<div><input type="checkbox" name="search_future">Future has many companies, but takes a while to load.  Check this box to search for future and resubmit</div>
+									<div>
+										{{if search_future:}}
+											<input type="checkbox" name="search_future" checked>
+										{{else:}}
+											<input type="checkbox" name="search_future">
+										{{pass}}
+										Future has many companies, but takes a while to load.  Check this box to search for future and resubmit
+									</div>
 								{{pass}}
 							    {{if matches and group_identifier in matches.keys():}}
 									{{if len(matches[group_identifier])>0:}}
