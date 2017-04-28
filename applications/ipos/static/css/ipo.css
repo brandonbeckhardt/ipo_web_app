@@ -12,7 +12,6 @@ label{
   width: 90%;
   height: 80%;
 }
-
 div.matcher_container{
 	width: 95%;
 }
@@ -33,7 +32,9 @@ div.matcher_container{
     margin-bottom: 70pt; 
     margin-top: 40pt; 
 }
-	
+#description{
+	margin : 10px 10px 15px 10px;;	
+}	
 .pricing{
 	display:block;
 }

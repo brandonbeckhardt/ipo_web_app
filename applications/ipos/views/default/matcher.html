@@ -3,6 +3,8 @@
 {{response.files.append(URL('static','bootstrap/css/bootstrap.min.css'))}}
 {{response.files.append(URL('static','bootstrap/ipo.css'))}}
 {{include 'web2py_ajax.html'}}
+
+
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <!-- Google Ads -->
 <script>
@@ -20,13 +22,17 @@
 
   ga('create', 'UA-98186626-1', 'auto');
   ga('send', 'pageview');
-
 </script>
 
 <div class="matcher_container container">
 	{{if 'message' in globals():}}
 		<h2>{{=message}}</h2>
 	{{pass}}
+	<div class="row">
+		<div class="description col-sm-9">
+			<p> Search for <b>initial public offerings</b> using <b>keywords</b> that relate to companies going public in the near future!  You can research companies with upcoming IPOs that relate to <b>technologies and industries you believe in</b>.  Search by entering in the text field below - what you are seeing now are all of the upcoming IPOs in the coming months relating to the text below. You can also view ALL upcoming IPOs by clicking "Search All Upcoming IPOs" button.  Use this as a tool to get a pulse on all of companies that have the potential to succeed in the rapidly changing <b>technology driven industries.</b> </p>
+		</div>
+	</div>
 	<div class="row">
 		<form action="submit_keyword_input" method="post">
 			<div class="col-sm-3">
@@ -73,5 +79,10 @@
 				{{pass}}
 			</div>
 		</form>
+	</div>
+	<div class="row">
+		<div id="footer" class="col-sm-12">
+			<p>Note this app relies on information pulled from various private and public market and news web resources.  Although this is an extremely helpful tool, make sure to use other resources research on these companies!<p>
+		</div>
 	</div>
 </div>
