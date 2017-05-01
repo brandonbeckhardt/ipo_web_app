@@ -4,19 +4,21 @@ import sys
 import json
 import threading
 import time
+from DateHandling import DateHandling
 
 
 class CompanyInformationFetcher:
 	def __init__(self, ipos):
 		self.ipos = ipos
 		self.getCompanyInfo()
+		# self.getCompanyInfo()
 
 	def getParsedData(self,group,company_info):
 		company_name = company_info[0]
 		ticker = company_info[1]
 		bloombergParser = BloombergParser()
 		content = bloombergParser.getDescription(ticker)
-	
+
 		if content:
 			description = content.strip()
 			company_map = {"ticker":ticker,"description":description, "company_name":company_name}
@@ -26,18 +28,19 @@ class CompanyInformationFetcher:
 	def getCompanyInfo(self):
 		print 'Getting company info..'
 		self.companies={}
-		for group in self.ipos.keys():
+		# create pool		
+		threads = []
+		for row in self.ipos:
+			group = DateHandling.getGroupFromDate(row.ipo_info.date_week)
 			if group == 'this_week' or group =='next_week' or group=='future':
 				self.companies[group] = []
-				# create pool					    
-				threads = []  
-				for idx, company_info in enumerate(self.ipos[group]):
-					t = threading.Thread(name='Company Info Fetcher',target=self.getParsedData,args=(group,company_info))
-					threads.append(t)
-					t.start()	
-				for t in threads:
-					t.join()
-		return
+				companyInfo =  (row.company_info.name,row.ipo_info.intended_ticker)			    
+				t = threading.Thread(name='Company Info Fetcher',target=self.getParsedData,args=(group,companyInfo))
+				threads.append(t)
+				t.start()	
+			for t in threads:
+				t.join()
+
 
 
 class BloombergParser(HTMLParser):
