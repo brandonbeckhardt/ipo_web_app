@@ -43,12 +43,33 @@ def matcher():
     return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=text_input)
 
 def submit_keyword_input():
+
     variables={}
     if request.vars.post_form == "submit":
         variables['keyWords'] = request.vars.text_input
     elif request.vars.post_form =="match_all":
         variables['match_all'] = "true"
     redirect(URL('matcher',vars=variables))
+
+
+def add_company():
+    company_info = db.company_info
+    company_info.data_source_id.writable = company_info.data_source_id.readable = False
+    ipo_info = db.ipo_info
+    ipo_info.data_source_id.writable = ipo_info.data_source_id.readable = False
+    ipo_info.company_id.writable = ipo_info.company_id.readable = False
+    form=SQLFORM.factory(company_info,ipo_info)
+    if form.process().accepted:
+        id = db.company_info.insert(**db.company_info._filter_fields(form.vars))
+        form.vars.company_id=id
+        id = db.ipo_info.insert(**db.ipo_info._filter_fields(form.vars))
+        response.flash = 'form accepted'
+    elif form.errors:
+        response.flash = 'form has errors'
+    else:
+        response.flash = 'please fill the form'
+    return dict(form=form)
+
 
 
 @cache.action()
