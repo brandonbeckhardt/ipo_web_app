@@ -58,11 +58,16 @@ def add_company():
     ipo_info = db.ipo_info
     ipo_info.data_source_id.writable = ipo_info.data_source_id.readable = False
     ipo_info.company_id.writable = ipo_info.company_id.readable = False
-    form=SQLFORM.factory(company_info,ipo_info)
+    description = db.company_description
+    description.company_id.writable =  description.company_id.readable = False
+    description.data_source_id.writable = description.data_source_id.readable = False
+
+    form=SQLFORM.factory(company_info,ipo_info, description)
     if form.process().accepted:
-        id = db.company_info.insert(**db.company_info._filter_fields(form.vars))
-        form.vars.company_id=id
+        companyId = db.company_info.insert(**db.company_info._filter_fields(form.vars))
+        form.vars.company_id=companyId
         id = db.ipo_info.insert(**db.ipo_info._filter_fields(form.vars))
+        id = db.company_description.insert(**db.company_description._filter_fields(form.vars))
         response.flash = 'form accepted'
     elif form.errors:
         response.flash = 'form has errors'
