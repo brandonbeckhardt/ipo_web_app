@@ -11,6 +11,7 @@
 from IpoFetcher import IpoFetcher
 from CompanyInformationFetcher import CompanyInformationFetcher
 from DataMatcher import DataMatcher
+from DateHandling import DateHandling
 
 import json
 import os
@@ -22,6 +23,13 @@ def index():
 
 def matcher():
     text_input = None
+
+    thisWeekRange = DateHandling.getThisWeekRange()
+    thisWeekIpoInfo = db(db.ipo_info.date_week >= thisWeekRange[0] or db.ipo_info.date_week == 'future').select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.id == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
+
+    print thisWeekIpoInfo
+    for row in thisWeekIpoInfo:
+        print DateHandling.getGroupFromDate(row.ipo_info.date_week)
 
     match_all=False
     if request.vars.has_key('match_all') and request.vars['match_all'] == "true":

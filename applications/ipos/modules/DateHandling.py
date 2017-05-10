@@ -24,15 +24,24 @@ class DateHandling():
 		if date == "future":
 			return "future"
 		else:
-			date = datetime.strptime(date, "%Y-%m-%d").date()
-			if date < thisWeekRange[0]:
-				return "past"
-			elif date >= thisWeekRange[0] and date <= thisWeekRange[1]:
-				return "this_week"
-			elif date >= nextWeekRange[0] and date <= nextWeekRange[1]:
-				return "next_week"
-			else:
-				return "future"
+			try:
+				date = datetime.strptime(date, "%Y-%m-%d").date()
+				if date < thisWeekRange[0]:
+					return "past"
+				elif date >= thisWeekRange[0] and date <= thisWeekRange[1]:
+					return "this_week"
+				elif date >= nextWeekRange[0] and date <= nextWeekRange[1]:
+					return "next_week"
+				else:
+					return "future"
+			except Exception as e:
+				print "Trouble parsing dates"
+				print e
+				return None
+
+	@staticmethod
+	def thisWeekOrLater(dt):
+		return (DateHandling.getGroupFromDate(dt) in ['this_week', 'next_week', 'future'])
 
 	@staticmethod
 	def getThisWeekRange():
