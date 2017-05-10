@@ -61,19 +61,40 @@ def add_company():
     description = db.company_description
     description.company_id.writable =  description.company_id.readable = False
     description.data_source_id.writable = description.data_source_id.readable = False
-
-    form=SQLFORM.factory(company_info,ipo_info, description)
-    if form.process().accepted:
-        companyId = db.company_info.insert(**db.company_info._filter_fields(form.vars))
-        form.vars.company_id=companyId
-        id = db.ipo_info.insert(**db.ipo_info._filter_fields(form.vars))
-        id = db.company_description.insert(**db.company_description._filter_fields(form.vars))
-        response.flash = 'form accepted'
-    elif form.errors:
-        response.flash = 'form has errors'
-    else:
-        response.flash = 'please fill the form'
-    return dict(form=form)
+    record = db((db.company_info.id == request.args(0)) & (db.ipo_info.company_id == request.args(0)) & (db.company_description.company_id == request.args(0))).select().first()
+    if record:
+        message = 'Update company Information'
+        dictRecord = {}
+        # NOTE -- if any tables have attributes with the same name, need to manually choose which to update, otherwise there may be issues
+        for key in record:
+            for attribute in record[key]:
+                if key == "company_info" or attribute != 'id':
+                    dictRecord[attribute] = record[key][attribute]
+        form=SQLFORM.factory(company_info,ipo_info, description, record=dictRecord, showid=False)
+        if form.process().accepted:
+            companyId = record.company_info.update_record(**db.company_info._filter_fields(form.vars))
+            form.vars.company_id=companyId
+            id = record.ipo_info.update_record(**db.ipo_info._filter_fields(form.vars))
+            id = record.company_description.update_record(**db.company_description._filter_fields(form.vars))
+            response.flash = 'form accepted'
+        elif form.errors:
+            response.flash = 'form has errors'
+        else:
+            response.flash = 'please fill the form'
+    else: 
+        message = 'Add new company'
+        form=SQLFORM.factory(company_info,ipo_info, description)
+        if form.process().accepted:
+            companyId = db.company_info.insert(**db.company_info._filter_fields(form.vars))
+            form.vars.company_id=companyId
+            id = db.ipo_info.insert(**db.ipo_info._filter_fields(form.vars))
+            id = db.company_description.insert(**db.company_description._filter_fields(form.vars))
+            response.flash = 'form accepted'
+        elif form.errors:
+            response.flash = 'form has errors'
+        else:
+            response.flash = 'please fill the form'
+    return dict(form=form, message=T(message))
 
 
 
