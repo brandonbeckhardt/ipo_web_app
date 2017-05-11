@@ -18,22 +18,24 @@ class DateHandling():
 		return None
 
 	@staticmethod
-	def getGroupFromDate(date):
+	def getGroupFromDate(dt):
 		thisWeekRange = DateHandling.getThisWeekRange()
 		nextWeekRange = DateHandling.getNextWeekRange()
-		if date == "future":
+		if dt == "future":
 			return "future"
 		else:
 			try:
-				date = datetime.strptime(date, "%Y-%m-%d").date()
-				if date < thisWeekRange[0]:
+				dt = datetime.strptime(dt, "%Y-%m-%d").date()
+				if dt < thisWeekRange[0]:
 					return "past"
-				elif date >= thisWeekRange[0] and date <= thisWeekRange[1]:
+				elif dt >= thisWeekRange[0] and dt <= thisWeekRange[1]:
 					return "this_week"
-				elif date >= nextWeekRange[0] and date <= nextWeekRange[1]:
+				elif dt >= nextWeekRange[0] and dt <= nextWeekRange[1]:
 					return "next_week"
-				else:
+				elif dt >= nextWeekRange[0]:
 					return "future"
+				else:
+					return None
 			except Exception as e:
 				print "Trouble parsing dates"
 				print e
