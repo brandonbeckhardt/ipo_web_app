@@ -24,13 +24,6 @@ def index():
 def matcher():
     text_input = None
 
-    thisWeekRange = DateHandling.getThisWeekRange()
-    thisWeekIpoInfo = db(db.ipo_info.date_week >= thisWeekRange[0] or db.ipo_info.date_week == 'future').select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.id == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
-
-    print thisWeekIpoInfo
-    for row in thisWeekIpoInfo:
-        print DateHandling.getGroupFromDate(row.ipo_info.date_week)
-
     match_all=False
     if request.vars.has_key('match_all') and request.vars['match_all'] == "true":
         match_all = True
@@ -43,8 +36,13 @@ def matcher():
             text_input = text_input_file.read()
 
     time_to_expire = 60*60*24 #cache daily
-    ipos = cache.disk('ipos', lambda: IpoFetcher().ipos, time_expire=time_to_expire)    
-    companyData = cache.disk('companies', lambda: CompanyInformationFetcher(ipos).companies, time_expire=time_to_expire)    
+    # ipos = cache.disk('ipos', lambda: IpoFetcher().ipos, time_expire=time_to_expire)    
+    # companyData = cache.disk('companies', lambda: CompanyInformationFetcher(ipos).companies, time_expire=time_to_expire)    
+
+
+    thisWeekRange = DateHandling.getThisWeekRange()
+    # companyData = db(db.ipo_info.date_week >= thisWeekRange[0] or db.ipo_info.date_week == 'future').select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.id == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
+    companyData = db().select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.id == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
     matches = DataMatcher(text_input,match_all,companyData).matches
 
     groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future")]
