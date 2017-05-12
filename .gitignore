@@ -3,3 +3,8 @@ httpserver.log
 *.pyc
 parameters_8000.py
 applications/ipos/cache/*
+applications/ipos/errors*
+applications/ipos/sessions/*
+applications/ipos/databases/*
+applications/admin/sessions/*
+applications/ipos/errors/*
