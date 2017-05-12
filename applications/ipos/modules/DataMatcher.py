@@ -3,6 +3,7 @@ import json
 import re
 import threading
 import time
+from DateHandling import DateHandling
 
 
 class DataMatcher:
@@ -26,10 +27,10 @@ class DataMatcher:
 
 	#Worked method for thread
 	def addIfMatch(self,group,company_info):
-		company_name = company_info["company_name"]
-		ticker = company_info["ticker"]
-		description = company_info["description"]
-		
+		company_name = company_info.company_info.name
+		ticker = company_info.company_info.ticker
+		description = company_info.company_description.description
+
 		company_map = None
 		has_matched = False
 		if description:
@@ -54,18 +55,17 @@ class DataMatcher:
 		if not (self.keyWords or len(self.keyWords) <= 0) and not self.match_all:
 			return None
 		else:
-			self.matches = {}
-			for group in self.companies.keys():
+			self.matches = {'this_week':[], 'next_week':[], 'future':[]}
+			# create pool
+			threads = []  
+			for row in self.companies:
+				group = DateHandling.getGroupFromDate(row.ipo_info.date_week)
 				if group == 'this_week' or group =='next_week' or group=='future':
-					self.matches[group] = []
-					# create pool					    
-					threads = []  
-					for idx, company_info in enumerate(self.companies[group]):
-						t = threading.Thread(name='Company Info Fetcher',target=self.addIfMatch,args=(group,company_info))
-						threads.append(t)
-						t.start()	
-					for t in threads:
-						t.join()
+					t = threading.Thread(name='Company Info Fetcher',target=self.addIfMatch,args=(group,row))
+					threads.append(t)
+					t.start()	
+			for t in threads:
+				t.join()
 		return
 
 
