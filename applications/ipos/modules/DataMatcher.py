@@ -35,7 +35,7 @@ class DataMatcher:
 		has_matched = False
 		if description:
 			if self.match_all:
-				company_map = {'company_name':company_name,'keyWordMatches':[],'description':description}
+				company_map = {'company_name':company_name,'keyWordMatches':[],'description':description, 'company_id':company_info.company_info.id}
 				has_matched = True
 			else:
 				lowerCaseDescription = description.lower()
