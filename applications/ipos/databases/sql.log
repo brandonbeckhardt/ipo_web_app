@@ -53,3 +53,39 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
+timestamp: 2017-05-14T14:40:21.829931
+CREATE TABLE data_source(
+    id SERIAL PRIMARY KEY,
+    source VARCHAR(512) NOT NULL,
+    date_time TIMESTAMP NOT NULL,
+    type TEXT NOT NULL
+);
+success!
+timestamp: 2017-05-14T14:40:22.088552
+CREATE TABLE company_info(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(512) NOT NULL,
+    ticker VARCHAR(512),
+    exchange VARCHAR(512),
+    country VARCHAR(512),
+    data_source_id INTEGER REFERENCES data_source (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2017-05-14T14:40:22.123579
+CREATE TABLE ipo_info(
+    id SERIAL PRIMARY KEY,
+    company_id INTEGER REFERENCES company_info (id) ON DELETE CASCADE  NOT NULL ,
+    data_source_id INTEGER REFERENCES data_source (id) ON DELETE CASCADE  ,
+    date DATE,
+    date_week VARCHAR(512),
+    broker VARCHAR(512)
+);
+success!
+timestamp: 2017-05-14T14:40:22.132446
+CREATE TABLE company_description(
+    id SERIAL PRIMARY KEY,
+    description VARCHAR(512) NOT NULL,
+    company_id INTEGER REFERENCES company_info (id) ON DELETE CASCADE  NOT NULL ,
+    data_source_id INTEGER REFERENCES data_source (id) ON DELETE CASCADE  
+);
+success!
