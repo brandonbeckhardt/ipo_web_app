@@ -14,7 +14,6 @@
   ga('send', 'pageview');
 
 </script>
-
 <div class="matcher_container container">
 	{{if 'message' in globals():}}
 		<h2>{{=message}}</h2>
@@ -42,6 +41,9 @@
 							            	 <th><label class="mobile_hide">Company Name </label></th>
 							            	 <th><label class="mobile_hide">Company Description</label></th>
 							            	 <th><label class="mobile_hide">Matched Key Words</label></th>
+							            	 {{if edit:}}
+							            	 	<th></th>
+							            	 {{pass}}
 							            </tr>
 										{{for match in matches[group_identifier]:}}
 											<tr>
@@ -51,6 +53,11 @@
 														{{=keyWord}}{{if idx != len(match['keyWordMatches'])-1:}},{{pass}}
 													{{pass}}
 												</td>
+												 {{if edit:}}
+							            	 	<td>
+							            			<a href="add_company/{{=match['company_id']}}"><button type="button">Edit</button></a>
+												</td>
+							            	 	{{pass}}
 											</tr>
 										{{pass}}
 									</table>
