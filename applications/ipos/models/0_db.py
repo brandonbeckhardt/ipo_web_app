@@ -12,9 +12,11 @@ if request.global_settings.web2py_version < "2.14.1":
 # app configuration made easy. Look inside private/appconfig.ini
 # -------------------------------------------------------------------------
 from gluon.contrib.appconfig import AppConfig
+from gluon.contrib.heroku import get_db
+
 
 # -------------------------------------------------------------------------
 # once in production, remove reload=True to gain full speed
 # -------------------------------------------------------------------------
 myconf = AppConfig(reload=True)
-db = DAL(myconf.get('db.uri'), myconf.get('db.pool_size'),lazy_tables=myconf.get('db.lazy_tables'))
+db = get_db(name=None, pool_size=10)
