@@ -19,4 +19,4 @@ from gluon.contrib.heroku import get_db
 # once in production, remove reload=True to gain full speed
 # -------------------------------------------------------------------------
 myconf = AppConfig(reload=True)
-db = get_db(name=None, pool_size=10)
+db = get_db(name='DATABASE_URL', pool_size=10)
