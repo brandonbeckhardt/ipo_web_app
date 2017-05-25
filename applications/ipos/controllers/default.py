@@ -87,7 +87,7 @@ def auth():
 
 def add_company():
     authenticated = False
-    if request.cookies.has_key('authenticate')and  request.cookies['authenticate'].value == 'true':
+    if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
         authenticated = True
         company_info = db.company_info
         company_info.data_source_id.writable = company_info.data_source_id.readable = False
