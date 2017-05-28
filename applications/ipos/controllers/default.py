@@ -15,6 +15,7 @@ from DateHandling import DateHandling
 
 import json
 import os
+import StringIO
 
 no_input_text = "123__NO_INPUT_TEXT__123"
 
@@ -85,6 +86,28 @@ def authenticate():
 def auth():
     return dict(message=T('Login'))
 
+def export():
+    s = StringIO.StringIO()
+    db.export_to_csv_file(s)
+    response.headers['Content-Type'] = 'text/csv'
+    return s.getvalue()
+
+
+def import_and_sync():
+    form = FORM(INPUT(_type='file', _name='data'), INPUT(_type='submit'))
+    if form.process().accepted:
+        db.import_from_csv_file(form.vars.data.file,unique=False)
+        # for every table
+        for table in db.tables:
+            # for every uuid, delete all but the latest
+            items = db(db[table]).select(db[table].id,
+                                         db[table].uuid,
+                                         orderby=db[table].modified_on,
+                                         groupby=db[table].uuid)
+            for item in items:
+                db((db[table].uuid==item.uuid) &
+                   (db[table].id!=item.id)).delete()
+    return dict(form=form)
 
 #Note at the moment, we can reference UUID for company_info in form.vars without any issues.
 #If we change ordering of how things are represented/consumed in form, may cause issues
