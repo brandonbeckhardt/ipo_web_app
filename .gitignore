@@ -4,3 +4,4 @@ parameters_8000.py
 applications/ipos/cache/*
 .metadata
 build
+.env

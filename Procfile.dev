@@ -1,0 +1,1 @@
+web: python web2py.py -c server.crt -k server.key -a 'ipo_web_app_pw_admin_local' -i 0.0.0.0 -p $PORT

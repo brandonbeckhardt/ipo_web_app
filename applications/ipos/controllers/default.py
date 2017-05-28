@@ -23,6 +23,12 @@ def index():
 
 def matcher():
     text_input = None
+    # open('test.csv', 'wb').write(str(db(db.company_info.id).select()))
+    # db.export_to_csv_file(open('test2.csv', 'wb'))
+    authenticated = False
+    if request.cookies.has_key('authenticate'):
+        if request.cookies['authenticate'].value == 'true':
+            authenticated = True
 
     authenticated = False
     if request.cookies.has_key('authenticate'):
@@ -51,7 +57,7 @@ def matcher():
 
     thisWeekRange = DateHandling.getThisWeekRange()
     # companyData = db(db.ipo_info.date_week >= thisWeekRange[0] or db.ipo_info.date_week == 'future').select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.id == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
-    companyData = db().select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.id == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
+    companyData = db().select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.uuid == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
     matches = DataMatcher(text_input,match_all,companyData).matches
 
     groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future")]
@@ -85,19 +91,28 @@ def auth():
     return dict(message=T('Login'))
 
 
+#Note at the moment, we can reference UUID for company_info in form.vars without any issues.
+#If we change ordering of how things are represented/consumed in form, may cause issues
 def add_company():
     authenticated = False
-    if request.cookies.has_key('authenticate')and  request.cookies['authenticate'].value == 'true':
+    if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
         authenticated = True
+
         company_info = db.company_info
         company_info.data_source_id.writable = company_info.data_source_id.readable = False
+        company_info.uuid.writable = company_info.uuid.readable = False
+
         ipo_info = db.ipo_info
         ipo_info.data_source_id.writable = ipo_info.data_source_id.readable = False
         ipo_info.company_id.writable = ipo_info.company_id.readable = False
+        ipo_info.uuid.writable = ipo_info.uuid.readable = False
+
         description = db.company_description
         description.company_id.writable =  description.company_id.readable = False
         description.data_source_id.writable = description.data_source_id.readable = False
-        record = db((db.company_info.id == request.args(0)) & (db.ipo_info.company_id == request.args(0)) & (db.company_description.company_id == request.args(0))).select().first()
+        description.uuid.writable = description.uuid.readable = False
+        
+        record = db((db.company_info.uuid == request.args(0)) & (db.ipo_info.company_id == request.args(0)) & (db.company_description.company_id == request.args(0))).select().first()
         if record:
             message = 'Update company Information'
             dictRecord = {}
@@ -108,8 +123,9 @@ def add_company():
                         dictRecord[attribute] = record[key][attribute]
             form=SQLFORM.factory(company_info,ipo_info, description, record=dictRecord, showid=False)
             if form.process().accepted:
-                companyId = record.company_info.update_record(**db.company_info._filter_fields(form.vars))
-                form.vars.company_id=companyId
+                form.vars.company_id=form.vars.uuid
+                id = record.company_info.update_record(**db.company_info._filter_fields(form.vars))
+                form.vars.company_id = db(db.company_info.id == id).select(db.company_info.uuid).first().uuid #get the company's uuid
                 id = record.ipo_info.update_record(**db.ipo_info._filter_fields(form.vars))
                 id = record.company_description.update_record(**db.company_description._filter_fields(form.vars))
                 response.flash = 'form accepted'
@@ -121,8 +137,8 @@ def add_company():
             message = 'Add new company'
             form=SQLFORM.factory(company_info,ipo_info, description)
             if form.process().accepted:
-                companyId = db.company_info.insert(**db.company_info._filter_fields(form.vars))
-                form.vars.company_id=companyId
+                id = db.company_info.insert(**db.company_info._filter_fields(form.vars))
+                form.vars.company_id = db(db.company_info.id == id).select(db.company_info.uuid).first().uuid #get the company's uuid
                 id = db.ipo_info.insert(**db.ipo_info._filter_fields(form.vars))
                 id = db.company_description.insert(**db.company_description._filter_fields(form.vars))
                 response.flash = 'form accepted'
