@@ -1,3 +1,4 @@
+import uuid
 # Create 
 db.define_table('ipo_info',
                     Field('uuid',length=64,default=lambda:str(uuid.uuid4())),
