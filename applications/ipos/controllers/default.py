@@ -99,14 +99,18 @@ def import_and_sync():
         db.import_from_csv_file(form.vars.data.file,unique=False)
         # for every table
         for table in db.tables:
-            # for every uuid, delete all but the latest
-            items = db(db[table]).select(db[table].id,
-                                         db[table].uuid,
-                                         orderby=db[table].modified_on,
-                                         groupby=db[table].uuid)
-            for item in items:
-                db((db[table].uuid==item.uuid) &
-                   (db[table].id!=item.id)).delete()
+            if 'uuid' in db[table].fields and 'modified_on' in db[table].fields:
+                # for every uuid, delete all but the latest
+                items = db(db[table]).select(db[table].id,
+                                             db[table].uuid,
+                                             orderby=db[table].uuid | ~db[table].modified_on)
+
+                if items and len(items) > 0:
+                    prevUuid = None
+                    for item in items:
+                        if item.uuid != prevUuid:
+                            prevUuid = item.uuid
+                            db((db[table].uuid==item.uuid) & (db[table].id!=item.id)).delete()
     return dict(form=form)
 
 #Note at the moment, we can reference UUID for company_info in form.vars without any issues.
