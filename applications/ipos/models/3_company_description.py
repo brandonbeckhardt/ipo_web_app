@@ -9,8 +9,9 @@ db.define_table('company_description',
                     format='%(description)s'
                    )
 
-db.company_description.company_id.requires=IS_IN_DB(db,'company_info.uuid','%(name)')
+db.executesql('CREATE INDEX IF NOT EXISTS COMPANY_DESCRIPTION_UUID_IDX ON company_description (uuid);')
 
+db.company_description.company_id.requires=IS_IN_DB(db,'company_info.uuid','%(name)')
 
 db.company_description._after_insert.append(lambda f, id: db(db.company_description.id == id).update_naive(modified_on=request.now))
 db.company_description._after_update.append(lambda s, f: updateModifiedOnIfModifiedOnNotUpdated(s,f)) 
