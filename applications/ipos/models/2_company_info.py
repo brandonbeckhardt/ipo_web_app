@@ -10,3 +10,11 @@ db.define_table('company_info',
                     Field('data_source_id',length=64),
                     format='%(name)'
                 )
+db.executesql('CREATE INDEX IF NOT EXISTS COMPANY_INFO_UUID_IDX ON company_info (uuid);')
+
+db.company_info._after_insert.append(lambda f, id: db(db.company_info.id == id).update_naive(modified_on=request.now))
+db.company_info._after_update.append(lambda s, f: updateModifiedOnIfModifiedOnNotUpdated(s,f)) 
+
+def updateModifiedOnIfModifiedOnNotUpdated(s,f):
+    for id in [r.id for r in s.select()]:
+        db(db.company_info.id == id).update_naive(modified_on=request.now)

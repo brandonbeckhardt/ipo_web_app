@@ -10,4 +10,13 @@ db.define_table('ipo_info',
                     Field('broker',type='string')
                    )
 
+db.executesql('CREATE INDEX IF NOT EXISTS IPO_INFO_UUID_IDX ON ipo_info (uuid);')
+
 db.ipo_info.company_id.requires=IS_IN_DB(db,'company_info.uuid','%(name)')
+
+db.ipo_info._after_insert.append(lambda f, id: db(db.ipo_info.id == id).update_naive(modified_on=request.now))
+db.ipo_info._after_update.append(lambda s, f: updateModifiedOnIfModifiedOnNotUpdated(s,f)) 
+
+def updateModifiedOnIfModifiedOnNotUpdated(s,f):
+    for id in [r.id for r in s.select()]:
+        db(db.ipo_info.id == id).update_naive(modified_on=request.now)
