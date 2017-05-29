@@ -17,6 +17,11 @@ import json
 import os
 import StringIO
 
+
+import logging
+logger = logging.getLogger("web2py.app.ipos")
+logger.setLevel(logging.DEBUG)
+
 no_input_text = "123__NO_INPUT_TEXT__123"
 
 def index():
