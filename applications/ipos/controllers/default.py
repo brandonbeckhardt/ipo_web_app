@@ -126,9 +126,7 @@ def import_and_sync():
 #Note at the moment, we can reference UUID for company_info in form.vars without any issues.
 #If we change ordering of how things are represented/consumed in form, may cause issues
 def add_company():
-    authenticated = False
     if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
-        authenticated = True
 
         company_info = db.company_info
         company_info.data_source_id.writable = company_info.data_source_id.readable = False
@@ -183,6 +181,18 @@ def add_company():
     return dict(form=form, message=T(message))
 
 
+def delete_company():
+    if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
+        variables = {}
+        if request.vars.uuid:
+            companyUuid = request.vars.uuid
+            db(db.ipo_info.company_id == companyUuid).delete()
+            db(db.company_description.company_id == companyUuid).delete()
+            db(db.company_info.uuid == companyUuid).delete()
+        variables['edit'] = "true"
+        redirect(URL('matcher',vars=variables))
+    else:
+        redirect(URL('matcher'))
 
 @cache.action()
 def download():
