@@ -4,4 +4,9 @@ parameters_8000.py
 applications/ipos/cache/*
 .metadata
 build
+applications/admin/sessions/*
 .env
+logs
+dump.out
+applications/ipos/errors/*
+venv/lib/python2.7/

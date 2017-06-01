@@ -12,10 +12,12 @@ from IpoFetcher import IpoFetcher
 from CompanyInformationFetcher import CompanyInformationFetcher
 from DataMatcher import DataMatcher
 from DateHandling import DateHandling
+from Enums import DataSourceTypes
 
 import json
 import os
 import StringIO
+import uuid
 
 
 import logging
@@ -96,12 +98,17 @@ def authenticate():
 def auth():
     return dict(message=T('Login'))
 
+# Create new data source and have all data reference this data source.  From there, export db
 def export():
+    dataSourceUuid = str(uuid.uuid4())
+    db.data_source.insert(uuid=dataSourceUuid, source='export',type=[DataSourceTypes.ALL])
+    for table in db.tables:
+        if 'data_source_id' in db[table].fields:
+            db(db[table].id > 0).update(data_source_id=dataSourceUuid)
     s = StringIO.StringIO()
     db.export_to_csv_file(s)
     response.headers['Content-Type'] = 'text/csv'
     return s.getvalue()
-
 
 def import_and_sync():
     form = FORM(INPUT(_type='file', _name='data'), INPUT(_type='submit'))
@@ -110,10 +117,20 @@ def import_and_sync():
         # for every table
         for table in db.tables:
             if 'uuid' in db[table].fields and 'modified_on' in db[table].fields:
+                
                 # for every uuid, delete all but the latest
                 items = db(db[table]).select(db[table].id,
                                              db[table].uuid,
                                              orderby=db[table].uuid | ~db[table].modified_on)
+            
+                # if table == "company_info":
+                #     singleItems = db.select(db[table].uuid, distinct=True)
+                #     #if not first time uploading (there exists non distinct uuids) 
+                #     #delete any distinct uuids (they must have been deleted in other db if they don't create duplciates  )
+                #     if (len(items) != len(singleItems)): 
+                #         logger.info("HERE")
+                #     else:
+                #         logger.info("NOT HERE")
 
                 if items and len(items) > 0:
                     prevUuid = None
