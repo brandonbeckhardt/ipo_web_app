@@ -5,3 +5,4 @@ git push origin stage
 git checkout master
 git merge stage
 git push origin master
+git checkout develop
