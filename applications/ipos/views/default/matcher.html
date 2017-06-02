@@ -66,10 +66,10 @@
 											</td>
 											 {{if edit:}}
 						            	 	<td>
-						            			<a href="add_company/{{=match['company_id']}}"><button type="button" class="btn btn-primary">Edit</button></a>
+						            			<a href="edit/add_company/{{=match['company_id']}}"><button type="button" class="btn btn-primary">Edit</button></a>
 											</td>
 											<td>
-												<form action="delete_company" method="post">
+												<form action="edit/delete_company" method="post">
 						            				<button type="submit" name="uuid" value="{{=match['company_id']}}" class="btn btn-primary">X</button>
 						            			</form>
 											</td>
