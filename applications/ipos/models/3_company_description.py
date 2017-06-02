@@ -2,7 +2,7 @@ import uuid
 # Create 
 db.define_table('company_description',
                     Field('uuid',length=64,default=lambda:str(uuid.uuid4())),
-                    Field('modified_on', 'datetime', default=request.now),
+                    Field('modified_on', 'datetime', default=request.now, readable=False, writable=False),
                     Field('description',type='string',notnull=True),
                     Field('company_id',length=64,notnull=True),
                     Field('data_migration_id',length=64),

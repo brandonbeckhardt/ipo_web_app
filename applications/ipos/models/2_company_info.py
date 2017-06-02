@@ -2,7 +2,7 @@ import uuid
 # Create 
 db.define_table('company_info',
                     Field('uuid',length=64,default=lambda:str(uuid.uuid4())),
-                    Field('modified_on', 'datetime', default=request.now),
+                    Field('modified_on', 'datetime', default=request.now, readable=False, writable=False),
                     Field('name',type='string',notnull=True),
                     Field('ticker',type='string'),
                     Field('exchange',type='string'),
