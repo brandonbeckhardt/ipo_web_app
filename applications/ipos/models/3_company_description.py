@@ -5,11 +5,12 @@ db.define_table('company_description',
                     Field('modified_on', 'datetime', default=request.now),
                     Field('description',type='string',notnull=True),
                     Field('company_id',length=64,notnull=True),
-                    Field('data_source_id',length=64),
+                    Field('data_migration_id',length=64),
                     format='%(description)s'
                    )
 
 db.executesql('CREATE INDEX IF NOT EXISTS COMPANY_DESCRIPTION_UUID_IDX ON company_description (uuid);')
+db.executesql('CREATE INDEX IF NOT EXISTS COMPANY_DESCRIPTION_data_migration_IDX ON company_description (data_migration_id);')
 
 db.company_description.company_id.requires=IS_IN_DB(db,'company_info.uuid','%(name)')
 

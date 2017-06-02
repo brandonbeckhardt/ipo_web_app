@@ -1,9 +1,10 @@
 from enum import Enum
 class DataSourceTypes(Enum):
-	ALL = 1
-	COMPANY = 2
-	IPO = 3
-	COMPANY_DESCRIPTION = 4
+	DATA_MIGRATION = 'DATA_MIGRATION'
+	ALL = 'ALL'
+	COMPANY = 'COMPANY'
+	IPO = 'IPO'
+	COMPANY_DESCRIPTION = 'COMPANY_DESCRIPTION'
 
 class DateGroupNames:
 	PAST = 1

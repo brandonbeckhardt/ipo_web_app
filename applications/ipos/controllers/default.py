@@ -101,10 +101,12 @@ def auth():
 # Create new data source and have all data reference this data source.  From there, export db
 def export():
     dataSourceUuid = str(uuid.uuid4())
-    db.data_source.insert(uuid=dataSourceUuid, source='export',type=[DataSourceTypes.ALL])
+    db.data_migration.insert(uuid=dataSourceUuid, source='export',type=[DataSourceTypes.DATA_MIGRATION, DataSourceTypes.ALL])
     for table in db.tables:
-        if 'data_source_id' in db[table].fields:
-            db(db[table].id > 0).update(data_source_id=dataSourceUuid)
+        if table == 'data_migration':
+            db(db[table].id>0).update(export_time=request.now)
+        elif 'data_migration_id' in db[table].fields:
+            db(db[table].id > 0).update(data_migration_id=dataSourceUuid)
     s = StringIO.StringIO()
     db.export_to_csv_file(s)
     response.headers['Content-Type'] = 'text/csv'
@@ -114,30 +116,36 @@ def import_and_sync():
     form = FORM(INPUT(_type='file', _name='data'), INPUT(_type='submit'))
     if form.process().accepted:
         db.import_from_csv_file(form.vars.data.file,unique=False)
-        # for every table
-        for table in db.tables:
-            if 'uuid' in db[table].fields and 'modified_on' in db[table].fields:
-                
-                # for every uuid, delete all but the latest
-                items = db(db[table]).select(db[table].id,
-                                             db[table].uuid,
-                                             orderby=db[table].uuid | ~db[table].modified_on)
-            
-                # if table == "company_info":
-                #     singleItems = db.select(db[table].uuid, distinct=True)
-                #     #if not first time uploading (there exists non distinct uuids) 
-                #     #delete any distinct uuids (they must have been deleted in other db if they don't create duplciates  )
-                #     if (len(items) != len(singleItems)): 
-                #         logger.info("HERE")
-                #     else:
-                #         logger.info("NOT HERE")
 
-                if items and len(items) > 0:
-                    prevUuid = None
-                    for item in items:
-                        if item.uuid != prevUuid:
-                            prevUuid = item.uuid
-                            db((db[table].uuid==item.uuid) & (db[table].id!=item.id)).delete()
+        #delete all old sets of data sources. old means was not uploaded just now
+        exportTime = db(db.data_migration).select(db.data_migration.export_time, db.data_migration.uuid, orderby=~db.data_migration.modified_on).first().export_time
+        if exportTime: #If there's no export time, it's not coming from a migration, want to avoid doing anything
+            db(db.data_migration.export_time != exportTime).delete() # delete all migration rows that were not part of this export                 
+
+            #Get the newest datasource
+            newDataSourceUUID = db(db.data_migration).select(db.data_migration.uuid,orderby=~db.data_migration.created_time).first().uuid
+
+            #Delete all data referencing old data_migration
+            for table in db.tables:
+                if 'uuid' in db[table].fields and ('data_migration_id' in db[table].fields or table =='data_migration'):
+                    if table != 'data_migration':
+                        #Delete all records that arent' referencing the most recent data_migration_id
+                        db(db[table].data_migration_id != newDataSourceUUID).delete()
+
+                    #For every uuid, delete all but the latest
+                    #This is precautionary, in case we happen to be uploading the exact same state of the db.  Avoids duplicates
+                    
+                    #Note both forms of deletion are necessary because they handle the cases in which a record was deleted, 
+                    #a record was added, a duplicate record has been imported
+                    
+                    items = db(db[table]).select(db[table].id, db[table].uuid, orderby=db[table].uuid | ~db[table].modified_on)
+                    if items and len(items) > 0:
+                        prevUuid = None
+                        for item in items:
+                            if item.uuid != prevUuid:
+                                prevUuid = item.uuid
+                                db((db[table].uuid==item.uuid) & (db[table].id!=item.id)).delete()
+
     return dict(form=form)
 
 #Note at the moment, we can reference UUID for company_info in form.vars without any issues.
@@ -146,17 +154,17 @@ def add_company():
     if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
 
         company_info = db.company_info
-        company_info.data_source_id.writable = company_info.data_source_id.readable = False
+        company_info.data_migration_id.writable = company_info.data_migration_id.readable = False
         company_info.uuid.writable = company_info.uuid.readable = False
 
         ipo_info = db.ipo_info
-        ipo_info.data_source_id.writable = ipo_info.data_source_id.readable = False
+        ipo_info.data_migration_id.writable = ipo_info.data_migration_id.readable = False
         ipo_info.company_id.writable = ipo_info.company_id.readable = False
         ipo_info.uuid.writable = ipo_info.uuid.readable = False
 
         description = db.company_description
         description.company_id.writable =  description.company_id.readable = False
-        description.data_source_id.writable = description.data_source_id.readable = False
+        description.data_migration_id.writable = description.data_migration_id.readable = False
         description.uuid.writable = description.uuid.readable = False
         
         record = db((db.company_info.uuid == request.args(0)) & (db.ipo_info.company_id == request.args(0)) & (db.company_description.company_id == request.args(0))).select().first()
