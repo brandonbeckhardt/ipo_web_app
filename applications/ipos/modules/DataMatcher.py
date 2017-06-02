@@ -35,7 +35,9 @@ class DataMatcher:
 		has_matched = False
 		if description:
 			if self.match_all:
-				company_map = {'company_name':company_name,'keyWordMatches':[],'description':description, 'company_id':company_info.company_info.uuid}
+				company_map = {'company_name':company_name,'keyWordMatches':[],
+				'description':description, 'company_id':company_info.company_info.uuid, 
+				'ipo_date':company_info.ipo_info.date}
 				has_matched = True
 			else:
 				lowerCaseDescription = description.lower()
@@ -55,15 +57,14 @@ class DataMatcher:
 		if not (self.keyWords or len(self.keyWords) <= 0) and not self.match_all:
 			return None
 		else:
-			self.matches = {'this_week':[], 'next_week':[], 'future':[]}
+			self.matches = {'this_week':[], 'next_week':[], 'future':[], 'past':[]}
 			# create pool
 			threads = []  
 			for row in self.companies:
 				group = DateHandling.getGroupFromDate(row.ipo_info.date_week)
-				if group == 'this_week' or group =='next_week' or group=='future':
-					t = threading.Thread(name='Company Info Fetcher',target=self.addIfMatch,args=(group,row))
-					threads.append(t)
-					t.start()	
+				t = threading.Thread(name='Company Info Fetcher',target=self.addIfMatch,args=(group,row))
+				threads.append(t)
+				t.start()	
 			for t in threads:
 				t.join()
 		return

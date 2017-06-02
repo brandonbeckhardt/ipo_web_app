@@ -68,7 +68,7 @@ def matcher():
     companyData = db().select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.uuid == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
     matches = DataMatcher(text_input,match_all,companyData).matches
 
-    groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future")]
+    groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future"),("Previous IPOs","past")]
     return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=text_input,edit=edit)
 
 def submit_keyword_input():
