@@ -145,7 +145,6 @@ div.matcher_container{
 	display:inline-block; 
 }
 
-
 /*What to do with mobile_show when are are not on mobile*/
 label.mobile_show {
 	display: none;
@@ -154,6 +153,15 @@ label.mobile_show {
 /*What to do with mobile hide when in mobile*/
 label.mobile_hide {
 	display: inline;
+}
+
+.group_label {
+	display: inline;
+}
+button.showOrHideGroupButton {
+	float: right;
+    margin: -3px 0px 10px 0px;
+    padding: 7px 20px;
 }
 
 /* 

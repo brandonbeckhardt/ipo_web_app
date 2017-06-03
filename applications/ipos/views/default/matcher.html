@@ -2,6 +2,7 @@
 {{response.files.append(URL('static','js/jquery-2.2.2.min.js'))}}
 {{response.files.append(URL('static','bootstrap/css/bootstrap.min.css'))}}
 {{response.files.append(URL('static','bootstrap/ipo.css'))}}
+{{response.files.append(URL('static','js/ipo.js'))}}
 {{include 'web2py_ajax.html'}}
 <!-- Google Analytics -->
 <script>
@@ -35,13 +36,17 @@
 					{{group_identifier = group[1]}}
 		
 				 	<div class="well">
-					    <h3>{{=group_label}}</h3>
+					    <h3 class="group_label">{{=group_label}}</h3>
+					    <button id="button_{{=group_identifier}}" class="showOrHideGroupButton btn btn-primary" onclick="showOrHideGroupTable(this,group_{{=group_identifier}})">-</button>
 					    {{if matches and group_identifier in matches.keys():}}
 							{{if len(matches[group_identifier])>0:}}
-								<table class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
+								<table id="group_{{=group_identifier}}" class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
 						            <tr class="mobile_hide">
 						            	 <th><label class="mobile_hide">Company Name </label></th>
 						            	 <th><label class="mobile_hide">Company Description</label></th>
+            	 		            	 {{if group_identifier != 'future':}}
+						            	 	<th><label class="mobile_hide">Expected IPO Date</label></th>
+						            	 {{pass}}
 						            	 <th><label class="mobile_hide">Matched Key Words</label></th>
 						            	 {{if edit:}}
 						            	 	<th></th>
@@ -52,6 +57,9 @@
 										<tr>
 											<td><label class="mobile_show">Company Name  </label>{{=match['company_name']}}</td>
 											<td><label class="mobile_show">Company Description </label>{{=match['description']}}</td>
+											{{if group_identifier != 'future':}}
+												<td><label class="mobile_show">Expected IPO Date</label>{{=match['ipo_date']}}</td>
+											{{pass}}
 											<td><label class="mobile_show">Matched Key Words </label>{{for idx, keyWord in enumerate(match['keyWordMatches']):}}
 													{{=keyWord}}{{if idx != len(match['keyWordMatches'])-1:}},{{pass}}
 												{{pass}}
@@ -69,6 +77,13 @@
 										</tr>
 									{{pass}}
 								</table>
+
+								{{if not show_past and group_identifier == 'past':}}
+								    <script>
+						    			showOrHideGroupTable(document.getElementById("button_{{=group_identifier}}"),
+						    			document.getElementById("group_{{=group_identifier}}"))
+						    		</script>
+						    	{{pass}}
 							{{else:}}
 								No matches
 							{{pass}}
