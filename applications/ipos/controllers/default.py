@@ -30,7 +30,7 @@ def index():
     redirect(URL('matcher'))
 
 def matcher():
-    text_input = None
+    textInput = None
     # open('test.csv', 'wb').write(str(db(db.company_info.id).select()))
     # db.export_to_csv_file(open('test2.csv', 'wb'))
     authenticated = False
@@ -52,12 +52,16 @@ def matcher():
         edit=True
         match_all = True
 
+    showPast = False
+    if request.vars.has_key('show_past') and request.vars['show_past'] == "true" and authenticated:
+        showPast=True
+
     if request.vars.has_key('keyWords') and request.vars['keyWords']:
-        text_input = request.vars['keyWords']
+        textInput = request.vars['keyWords']
     else:
         filepath = os.path.join(request.folder, 'uploads', 'keyWords.txt')
         with open(filepath, 'r') as text_input_file:
-            text_input = text_input_file.read()
+            textInput = text_input_file.read()
 
     time_to_expire = 60*60*24 #cache daily
     # ipos = cache.disk('ipos', lambda: IpoFetcher().ipos, time_expire=time_to_expire)    
@@ -66,10 +70,10 @@ def matcher():
     thisWeekRange = DateHandling.getThisWeekRange()
     # companyData = db(db.ipo_info.date_week >= thisWeekRange[0] or db.ipo_info.date_week == 'future').select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.id == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
     companyData = db().select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.uuid == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
-    matches = DataMatcher(text_input,match_all,companyData).matches
+    matches = DataMatcher(textInput,match_all,companyData).matches
 
     groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future"),("Previous IPOs","past")]
-    return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=text_input,edit=edit)
+    return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=textInput,edit=edit,show_past=showPast)
 
 def submit_keyword_input():
     variables={}
