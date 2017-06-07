@@ -20,7 +20,6 @@ class HerokuPostgresAdapter(UseDatabaseStoredFile,PostgreSQLAdapter):
 ADAPTERS['postgres'] = HerokuPostgresAdapter
 
 def get_db(name = None, pool_size=10):
-    logger.info(os.environ[name])
     if not name:
         names = [n for n in os.environ.keys()
                  if n[:18]+n[-4:]=='HEROKU_POSTGRESQL__URL']

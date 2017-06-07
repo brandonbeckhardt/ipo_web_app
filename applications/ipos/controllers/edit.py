@@ -123,21 +123,14 @@ def add_company():
         else: 
             message = 'Add new company'
             form=SQLFORM.factory(company_info,ipo_info, description, _class='add_or_edit_company', formstyle='table2cols')
-            logger.info(form)
-            print form.element('input[name=description]')
-            # ['_type']='textarea'
-            logger.info("--------")
-            logger.info(form)
             if form.process().accepted:
                 id = db.company_info.insert(**db.company_info._filter_fields(form.vars))
                 form.vars.company_id = db(db.company_info.id == id).select(db.company_info.uuid).first().uuid #get the company's uuid
                 id = db.ipo_info.insert(**db.ipo_info._filter_fields(form.vars))
                 id = db.company_description.insert(**db.company_description._filter_fields(form.vars))
-                response.flash = 'form accepted'
+                response.flash = 'Form accepted'
             elif form.errors:
-                response.flash = 'form has errors'
-            else:
-                response.flash = 'please fill the form'
+                response.flash = 'Form has errors and was not submitted - please see below for details'
     else:
         redirect(URL('default','matcher'))
     return dict(form=form, message=T(message))

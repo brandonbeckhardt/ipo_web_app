@@ -179,6 +179,9 @@ form.add_or_edit_company {
 form.add_or_edit_company>table {
 	width: 100%;
 }
+div.add_company_wrapper {
+	padding: 0% 3% 10% 3%;
+}
 
 /* 
 Max width before this PARTICULAR table gets nasty

@@ -86,14 +86,15 @@ def submit_keyword_input():
 def authenticate():
     variables={}
     myconf = AppConfig(reload=True)
-    if request.vars.authentication_button == "login":
-        if request.vars.username == myconf.get('temp_auth.username'):
-            if request.vars.password == myconf.get('temp_auth.pw'):
-                response.cookies['authenticate'] = 'true'
-                response.cookies['authenticate']['expires'] = .5 * 3600 #1/2 hour
-                response.cookies['authenticate']['secure'] = True
-                response.cookies['authenticate']['path'] = '/'
-                variables['edit'] = "true"
+    if 'TEMP_LOGIN' in os.environ and 'TEMP_PW' in os.environ:
+        if request.vars.authentication_button == "login":
+            if request.vars.username ==  os.environ['TEMP_LOGIN']:
+                if request.vars.password == os.environ['TEMP_PW']:
+                    response.cookies['authenticate'] = 'true'
+                    response.cookies['authenticate']['expires'] = .5 * 3600 #1/2 hour
+                    response.cookies['authenticate']['secure'] = True
+                    response.cookies['authenticate']['path'] = '/'
+                    variables['edit'] = "true"
     elif request.vars.authentication_button == "logout":
         response.cookies['authenticate'] = 'false'
         response.cookies['authenticate']['path'] = '/'
