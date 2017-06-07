@@ -169,6 +169,16 @@ button.add_company {
 	margin: 0px 0px 20px 0px;
 	padding: 10px 0px;
 }
+textarea.company_description_textarea {
+	width: 50%;
+	height:200px;
+}
+form.add_or_edit_company {
+	width: 100%;
+}
+form.add_or_edit_company>table {
+	width: 100%;
+}
 
 /* 
 Max width before this PARTICULAR table gets nasty
