@@ -16,6 +16,8 @@ db.executesql('CREATE INDEX IF NOT EXISTS COMPANY_INFO_data_migration_IDX ON com
 db.company_info._after_insert.append(lambda f, id: db(db.company_info.id == id).update_naive(modified_on=request.now))
 db.company_info._after_update.append(lambda s, f: updateModifiedOnIfModifiedOnNotUpdated(s,f)) 
 
+db.company_info.name.requires = IS_NOT_EMPTY()
+
 def updateModifiedOnIfModifiedOnNotUpdated(s,f):
     for id in [r.id for r in s.select()]:
         db(db.company_info.id == id).update_naive(modified_on=request.now)

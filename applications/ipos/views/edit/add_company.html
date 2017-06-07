@@ -20,14 +20,15 @@
 	{{if 'message' in globals():}}
 		<h2>{{=message}}</h2>
 	{{pass}}
+	<div class="flash">{{=response.flash or ''}}</div>
 	<div class="row">
-		<h2>Input form</h2>
-		{{=form}}
-		<h2>Submitted variables</h2>
-		{{=BEAUTIFY(request.vars)}}
-		<h2>Accepted variables</h2>
-		{{=BEAUTIFY(form.vars)}}
-		<h2>Errors in form</h2>
-		{{=BEAUTIFY(form.errors)}}
+		<div class="add_company_wrapper well">
+			<h2>Input form</h2>
+			{{=form}}
+			{{if form.errors:}}
+			<h2>Errors in form</h2>
+			{{=BEAUTIFY(form.errors)}}
+			{{pass}}
+		</div>
 	</div>
 </div>
