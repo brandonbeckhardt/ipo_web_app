@@ -86,8 +86,9 @@ def submit_keyword_input():
 def authenticate():
     variables={}
     myconf = AppConfig(reload=True)
-    if 'TEMP_LOGIN' in os.environ and 'TEMP_PW' in os.environ:
-        if request.vars.authentication_button == "login":
+    logger.info(request.vars.authentication_button)  
+    if request.vars.authentication_button == "login":
+        if 'TEMP_LOGIN' in os.environ and 'TEMP_PW' in os.environ:
             if request.vars.username ==  os.environ['TEMP_LOGIN']:
                 if request.vars.password == os.environ['TEMP_PW']:
                     response.cookies['authenticate'] = 'true'

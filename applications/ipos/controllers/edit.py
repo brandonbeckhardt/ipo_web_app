@@ -26,17 +26,21 @@ logger.setLevel(logging.DEBUG)
 
 # Create new data source and have all data reference this data source.  From there, export db
 def export():
-    dataSourceUuid = str(uuid.uuid4())
-    db.data_migration.insert(uuid=dataSourceUuid, source='export',type=[DataSourceTypes.DATA_MIGRATION, DataSourceTypes.ALL])
-    for table in db.tables:
-        if table == 'data_migration':
-            db(db[table].id>0).update(export_time=request.now)
-        elif 'data_migration_id' in db[table].fields:
-            db(db[table].id > 0).update(data_migration_id=dataSourceUuid)
-    s = StringIO.StringIO()
-    db.export_to_csv_file(s)
-    response.headers['Content-Type'] = 'text/csv'
-    return s.getvalue()
+    if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
+        dataSourceUuid = str(uuid.uuid4())
+        db.data_migration.insert(uuid=dataSourceUuid, source='export',type=[DataSourceTypes.DATA_MIGRATION, DataSourceTypes.ALL])
+        for table in db.tables:
+            if table == 'data_migration':
+                db(db[table].id>0).update(export_time=request.now)
+            elif 'data_migration_id' in db[table].fields:
+                db(db[table].id > 0).update(data_migration_id=dataSourceUuid)
+        s = StringIO.StringIO()
+        db.export_to_csv_file(s)
+        response.headers['Content-Type'] = 'text/csv'
+        return s.getvalue()
+    else:
+        redirect(URL('default','matcher'))                           
+        return
 
 def import_and_sync():
     if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
@@ -72,10 +76,11 @@ def import_and_sync():
                                 if item.uuid != prevUuid:
                                     prevUuid = item.uuid
                                     db((db[table].uuid==item.uuid) & (db[table].id!=item.id)).delete()
+        return dict(form=form)
     else:
         redirect(URL('default','matcher'))                           
-
-    return dict(form=form)
+        return
+    
 
 #Note at the moment, we can reference UUID for company_info in form.vars without any issues.
 #If we change ordering of how things are represented/consumed in form, may cause issues
