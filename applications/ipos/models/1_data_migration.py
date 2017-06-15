@@ -3,6 +3,7 @@ import uuid
 db.define_table('data_migration',
                     Field('uuid', length=64, default=lambda:str(uuid.uuid4())),
                     Field('modified_on', 'datetime', default=request.now, readable=False, writable=False),
+                    Field('created_on', 'datetime', default=request.now, readable=False, writable=False),
                     #Datetime the data source was last exported (through csv)
                     Field('export_time', 'datetime'), 
                     #Datetime the data source was last imported (through csv)
