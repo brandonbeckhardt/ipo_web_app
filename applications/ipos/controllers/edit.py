@@ -114,6 +114,8 @@ def add_company():
                     if key == "company_info" or attribute != 'id':
                         dictRecord[attribute] = record[key][attribute]
             form=SQLFORM.factory(company_info,ipo_info, description, record=dictRecord, showid=False, _class='add_or_edit_company', formstyle='table2cols')
+            add_custom_fields(form)
+
             if form.process().accepted:
                 form.vars.company_id=form.vars.uuid
                 id = record.company_info.update_record(**db.company_info._filter_fields(form.vars))
@@ -128,6 +130,8 @@ def add_company():
         else: 
             message = 'Add new company'
             form=SQLFORM.factory(company_info,ipo_info, description, _class='add_or_edit_company', formstyle='table2cols')
+            add_custom_fields(form)
+
             if form.process().accepted:
                 id = db.company_info.insert(**db.company_info._filter_fields(form.vars))
                 form.vars.company_id = db(db.company_info.id == id).select(db.company_info.uuid).first().uuid #get the company's uuid
@@ -139,6 +143,27 @@ def add_company():
     else:
         redirect(URL('default','matcher'))
     return dict(form=form, message=T(message))
+
+def add_custom_fields(form):
+    # Should change the way we do this
+    # logger.info(form_item[0][0][0])
+    # logger.info(type(form_item[0][0][0]))
+    # logger.info(len(form_item[0][0][0]))
+    public_url_label = TR(LABEL('Public Company URL:'))
+    public_url_input = TR(INPUT(_name='public_url',_type='text'))
+    form[0].insert(len(form[0])-4, public_url_label)
+    form[0].insert(len(form[0])-4, public_url_input)
+
+    private_url_label = TR(LABEL('Private Company URL:'))
+    private_url_input = TR(INPUT(_name='private_url',_type='text'))
+    form[0].insert(len(form[0])-4, private_url_label)
+    form[0].insert(len(form[0])-4, private_url_input)
+
+    broker_url_label = TR(LABEL('Broker Company URL:'))
+    broker_url_input = TR(INPUT(_name='broker_url',_type='text'))
+    form[0].insert(len(form[0])-4, broker_url_label)
+    form[0].insert(len(form[0])-4, broker_url_input)
+
 
 
 def delete_company():
