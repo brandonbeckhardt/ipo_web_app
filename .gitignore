@@ -10,3 +10,4 @@ logs
 dump.out
 applications/ipos/errors/*
 venv/lib/python2.7/
+applications/ipos/databases/sql.log

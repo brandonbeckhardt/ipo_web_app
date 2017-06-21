@@ -102,7 +102,10 @@ def authenticate():
     redirect(URL('matcher',vars=variables))
 
 def auth():
-    return dict(message=T('Login'))
+    if not request.is_https:
+        redirect(URL(scheme='https', args=request.args, vars=request.vars))
+    else:
+        return dict(message=T('Login'))
 
 @cache.action()
 def download():
