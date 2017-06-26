@@ -7,6 +7,7 @@ db.define_table('url_info',
                     Field('data_migration_id',length=64),
                     Field('reference_id',length=64,notnull=True),
                     Field('type',type='integer',notnull=True),
+                    Field('is_primary',type='boolean',default=False),
                     Field('url',type='string',notnull=True),
                     Field('label',type='string')
                    )
