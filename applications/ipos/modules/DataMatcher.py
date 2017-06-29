@@ -5,12 +5,15 @@ import threading
 import time
 from DateHandling import DateHandling
 
+import logging
+
 
 class DataMatcher:
-	def __init__(self, text_input,match_all,companies):
+	def __init__(self, text_input,match_all,companies, logger):
 		self.match_all=match_all
 		self.companies = companies
 		self.keyWords = self.getKeyWords(text_input)
+		self.logger = logger
 
 		self.matches = None
 		self.getMatches()
@@ -62,10 +65,11 @@ class DataMatcher:
 			# create pool
 			threads = []  
 			for row in self.companies:
-				group = DateHandling.getGroupFromDate(row.ipo_info.date_week)
-				t = threading.Thread(name='Company Info Fetcher',target=self.addIfMatch,args=(group,row))
-				threads.append(t)
-				t.start()	
+				group = DateHandling.getGroupFromDate(row.ipo_info.date_week, self.logger)
+				if group:
+					t = threading.Thread(name='Company Info Fetcher',target=self.addIfMatch,args=(group,row))
+					threads.append(t)
+					t.start()	
 			for t in threads:
 				t.join()
 		return
