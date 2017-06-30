@@ -43,6 +43,15 @@ def export():
         redirect(URL('default','matcher'))                           
         return
 
+def updateCompanyDescription():
+    if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
+        rows = db(db.company_info).select()
+        for row in rows:
+            desc = db(db.company_description.company_id == row.uuid).select().first()
+            if desc and desc != "":
+                logger.info(desc.description)
+                row.update_record(description=desc.description)
+
 def import_and_sync():
     if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
         form = FORM(INPUT(_type='file', _name='data'), INPUT(_type='submit'))
@@ -97,19 +106,12 @@ def add_company():
         ipo_info.uuid.writable = ipo_info.uuid.readable = False
         ipo_info.date_week.widget=SQLFORM.widgets.date.widget
 
-        description = db.company_description
-        description.company_id.writable =  description.company_id.readable = False
-        description.data_migration_id.writable = description.data_migration_id.readable = False
-        description.uuid.writable = description.uuid.readable = False
-        description.description.widget=lambda field, value: SQLFORM.widgets.text.widget(field, value, _class="description_textarea")
-
         data_sources = db.data_sources
         data_sources.sources.widget=lambda field, value: SQLFORM.widgets.text.widget(field, value, _class="description_textarea")
 
 
         record = db((db.company_info.uuid == request.args(0)) 
-            & (db.ipo_info.company_id == request.args(0)) 
-            & (db.company_description.company_id == request.args(0))).select().first()
+            & (db.ipo_info.company_id == request.args(0))).select().first()
         if record:
             message = 'Update company Information'
             dictRecord = {}
@@ -118,7 +120,7 @@ def add_company():
                 for attribute in record[key]:
                     if key == "company_info" or attribute != 'id':
                         dictRecord[attribute] = record[key][attribute]
-            form=SQLFORM.factory(company_info,ipo_info, description, record=dictRecord, showid=False, _class='add_or_edit_company', formstyle='table2cols')
+            form=SQLFORM.factory(company_info,ipo_info, record=dictRecord, showid=False, _class='add_or_edit_company', formstyle='table2cols')
             url_info = db((db.url_info.reference_id == record.company_info.uuid or db.url_info.reference_id == record.ipo_info.uuid) and (db.url_info.is_primary == True)).select(orderby=db.url_info.created_on)
             add_custom_fields(form, url_info, record.company_info.uuid, record.ipo_info.uuid)
             if form.process().accepted:
@@ -126,7 +128,6 @@ def add_company():
                 record.company_info.update_record(**db.company_info._filter_fields(form.vars))
                 form.vars.company_id = record.company_info.uuid #get the company's uuid5
                 record.ipo_info.update_record(**db.ipo_info._filter_fields(form.vars))
-                record.company_description.update_record(**db.company_description._filter_fields(form.vars))
                 # record.data_sources.update_record(**db.data_sources._filter_fields(form.vars))
                 save_custom_field_values(form, url_info, record.company_info.uuid, record.ipo_info.uuid)
 
@@ -137,7 +138,7 @@ def add_company():
                 response.flash = 'please fill the form'
         else: 
             message = 'Add new company'
-            form=SQLFORM.factory(company_info,ipo_info, description, _class='add_or_edit_company', formstyle='table2cols')
+            form=SQLFORM.factory(company_info,ipo_info, _class='add_or_edit_company', formstyle='table2cols')
             add_custom_fields(form, False, None, None)
 
             if form.process().accepted:
@@ -147,7 +148,6 @@ def add_company():
                 ipo_info_uuid = ""
                 if form.vars.broker_url and form.vars.broker_url != "":
                     ipo_info_uuid = db(db.ipo_info.id == ipo_id).select(db.ipo_info.uuid).first().uuid #get the ipo uuid
-                db.company_description.insert(**db.company_description._filter_fields(form.vars))
                 # db.data_sources.insert(**db.data_sources._filter_fields(form.vars))
                 save_custom_field_values(form, None, form.vars.company_id, ipo_info_uuid)
                 response.flash = 'Form accepted'
@@ -233,16 +233,12 @@ def add_custom_fields(form, url_info, company_reference, ipo_reference):
     form[0].insert(len(form[0])-customVarsOffset, broker_url_input)
 
 
-
-
-
 def delete_company():
     if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
         variables = {}
         if request.vars.uuid:
             companyUuid = request.vars.uuid
             db(db.ipo_info.company_id == companyUuid).delete()
-            db(db.company_description.company_id == companyUuid).delete()
             db(db.company_info.uuid == companyUuid).delete()
         variables['edit'] = "true"
         redirect(URL('default','matcher',vars=variables))

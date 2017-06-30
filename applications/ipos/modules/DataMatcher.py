@@ -31,7 +31,7 @@ class DataMatcher:
 	def addIfMatch(self,group,company_info):
 		company_name = company_info.company_info.name
 		ticker = company_info.company_info.ticker
-		description = company_info.company_description.description
+		description = company_info.company_info.description
 
 		company_map = None
 		has_matched = False
