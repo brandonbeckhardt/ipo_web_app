@@ -1,5 +1,4 @@
 import json
-# import os
 import re
 import threading
 import time
@@ -50,7 +49,7 @@ class DataMatcher:
 							company_map['keyWordMatches'] = company_map['keyWordMatches'] + [keyWord]
 						else:
 							company_map = {'company_name':company_name,'keyWordMatches':[keyWord],
-							'description':description, 'ipo_date':company_info.ipo_info.date}
+							'description':description, 'ipo_date':company_info.ipo_info.date, 'company_id':company_info.company_info.uuid}
 							has_matched = True
 		if has_matched:
 			self.matches[group].append(company_map)
@@ -58,6 +57,7 @@ class DataMatcher:
 
 
 	def getMatches(self):
+		#If no keywords and we're not searching for everything, return nothing
 		if not (self.keyWords or len(self.keyWords) <= 0) and not self.match_all:
 			return None
 		else:

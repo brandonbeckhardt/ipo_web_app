@@ -1,5 +1,4 @@
-from datetime import datetime, timedelta, date
-
+from datetime import datetime, timedelta, date, time
 import logging
 
 class DateHandling():
@@ -74,6 +73,10 @@ class DateHandling():
 	@staticmethod
 	def today():
 		return datetime.today()
+
+	@staticmethod
+	def dateToDatetime(dateInput):
+		return datetime.combine(dateInput, time.min)
 
 		
 
