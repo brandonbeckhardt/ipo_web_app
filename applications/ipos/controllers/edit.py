@@ -164,7 +164,6 @@ def save_custom_field_values(form, url_info, company_reference, ipo_reference):
                         else:
                             url_item.delete_record()
                     public_company_handled = True
-            if url_item.reference_id == ipo_reference and url_item.is_primary:
                 if url_item.type == UrlTypes.PRIVATE_COMPANY_URL['enum']:
                     if url_item.url != form.vars.private_url:
                         if form.vars.private_url != "":
@@ -172,6 +171,7 @@ def save_custom_field_values(form, url_info, company_reference, ipo_reference):
                         else:
                             url_item.delete_record()
                     private_company_handled = True
+            if url_item.reference_id == ipo_reference and url_item.is_primary:
                 if url_item.type == UrlTypes.BROKER_URL['enum']:
                     if url_item.url != form.vars.broker_url:
                         if form.vars.broker_url != "":
@@ -184,7 +184,7 @@ def save_custom_field_values(form, url_info, company_reference, ipo_reference):
         db.url_info.insert(url = form.vars.public_url, is_primary=True, reference_id = company_reference,
             type=UrlTypes.PUBLIC_COMPANY_URL['enum'])
     if not private_company_handled and form.vars.private_url != "":
-        db.url_info.insert(url = form.vars.private_url, is_primary=True, reference_id = ipo_reference,
+        db.url_info.insert(url = form.vars.private_url, is_primary=True, reference_id = company_reference,
                     type=UrlTypes.PRIVATE_COMPANY_URL['enum'])
     if not broker_handled and form.vars.broker_url != "":
         db.url_info.insert(url = form.vars.broker_url, is_primary=True, reference_id = ipo_reference,
@@ -200,9 +200,9 @@ def add_custom_fields(form, url_info, company_reference, ipo_reference):
             if url_item.reference_id == company_reference and url_item.is_primary:
                 if url_item.type == UrlTypes.PUBLIC_COMPANY_URL['enum']:
                     public_company_value = url_item.url
-            if url_item.reference_id == ipo_reference and url_item.is_primary:
                 if url_item.type == UrlTypes.PRIVATE_COMPANY_URL['enum']:
                     private_company_value = url_item.url
+            if url_item.reference_id == ipo_reference and url_item.is_primary:
                 if url_item.type == UrlTypes.BROKER_URL['enum']:
                     broker_value = url_item.url
                 

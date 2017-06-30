@@ -7,10 +7,10 @@ class DataSourceTypes(Enum):
 	COMPANY_DESCRIPTION = 'COMPANY_DESCRIPTION'
 
 class DateGroupNames(Enum):
-	PAST = 1
-	THIS_WEEK = 2
-	NEXT_WEEK = 3
-	FUTURE = 4
+	PAST = 'PAST'
+	THIS_WEEK = 'THIS_WEEK'
+	NEXT_WEEK = 'NEXT_WEEK'
+	FUTURE = 'FUTURE'
 
 class UrlTypes(Enum):
 	PUBLIC_COMPANY_URL = {'enum':1, 'table_name':'company_info'}

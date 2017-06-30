@@ -13,6 +13,8 @@ from CompanyInformationFetcher import CompanyInformationFetcher
 from DataMatcher import DataMatcher
 from DateHandling import DateHandling
 from Enums import DataSourceTypes
+from Enums import UrlTypes
+from UrlHandler import UrlHandler
 
 import json
 import os
@@ -63,17 +65,24 @@ def matcher():
         with open(filepath, 'r') as text_input_file:
             textInput = text_input_file.read()
 
-    time_to_expire = 60*60*24 #cache daily
-    # ipos = cache.disk('ipos', lambda: IpoFetcher().ipos, time_expire=time_to_expire)    
-    # companyData = cache.disk('companies', lambda: CompanyInformationFetcher(ipos).companies, time_expire=time_to_expire)    
+    time_to_expire = 60*60*24 #cache daily 
 
     thisWeekRange = DateHandling.getThisWeekRange()
-    # companyData = db(db.ipo_info.date_week >= thisWeekRange[0] or db.ipo_info.date_week == 'future').select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.id == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
-    companyData = db().select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL, join=[db.company_info.on(db.company_info.uuid == db.ipo_info.company_id), db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
-    matches = DataMatcher(textInput,match_all,companyData).matches
+    companyData = db().select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL,
+        join=[
+        db.company_info.on(db.company_info.uuid == db.ipo_info.company_id), 
+        db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
 
+    urlData = db((db.url_info.type == UrlTypes.PUBLIC_COMPANY_URL['enum'] 
+        or db.url_info.type == UrlTypes.PRIVATE_COMPANY_URL['enum']
+        or db.url_info.type == UrlTypes.BROKER_URL['enum']) and db.url_info.is_primary==True).select()
+    
+    urlHandler = UrlHandler(urlData, logger)
+    matches = DataMatcher(textInput,match_all,companyData, logger).matches
     groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future"),("Previous IPOs","past")]
-    return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=textInput,edit=edit,show_past=showPast)
+    return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=textInput,edit=edit,
+        show_past=showPast, urlHandler=urlHandler)
+
 
 def submit_keyword_input():
     variables={}

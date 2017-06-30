@@ -1,16 +1,18 @@
 import json
-# import os
 import re
 import threading
 import time
 from DateHandling import DateHandling
 
+import logging
+
 
 class DataMatcher:
-	def __init__(self, text_input,match_all,companies):
+	def __init__(self, text_input,match_all,companies, logger):
 		self.match_all=match_all
 		self.companies = companies
 		self.keyWords = self.getKeyWords(text_input)
+		self.logger = logger
 
 		self.matches = None
 		self.getMatches()
@@ -47,7 +49,7 @@ class DataMatcher:
 							company_map['keyWordMatches'] = company_map['keyWordMatches'] + [keyWord]
 						else:
 							company_map = {'company_name':company_name,'keyWordMatches':[keyWord],
-							'description':description, 'ipo_date':company_info.ipo_info.date}
+							'description':description, 'ipo_date':company_info.ipo_info.date, 'company_id':company_info.company_info.uuid}
 							has_matched = True
 		if has_matched:
 			self.matches[group].append(company_map)
@@ -55,6 +57,7 @@ class DataMatcher:
 
 
 	def getMatches(self):
+		#If no keywords and we're not searching for everything, return nothing
 		if not (self.keyWords or len(self.keyWords) <= 0) and not self.match_all:
 			return None
 		else:
@@ -62,10 +65,11 @@ class DataMatcher:
 			# create pool
 			threads = []  
 			for row in self.companies:
-				group = DateHandling.getGroupFromDate(row.ipo_info.date_week)
-				t = threading.Thread(name='Company Info Fetcher',target=self.addIfMatch,args=(group,row))
-				threads.append(t)
-				t.start()	
+				group = DateHandling.getGroupFromDate(row.ipo_info.date_week, self.logger)
+				if group:
+					t = threading.Thread(name='Company Info Fetcher',target=self.addIfMatch,args=(group,row))
+					threads.append(t)
+					t.start()	
 			for t in threads:
 				t.join()
 		return

@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta, date
+from datetime import datetime, timedelta, date, time
+import logging
 
 class DateHandling():
 
@@ -18,7 +19,7 @@ class DateHandling():
 		return None
 
 	@staticmethod
-	def getGroupFromDate(dt):
+	def getGroupFromDate(dt, logger):
 		thisWeekRange = DateHandling.getThisWeekRange()
 		nextWeekRange = DateHandling.getNextWeekRange()
 		if dt == "future":
@@ -35,15 +36,16 @@ class DateHandling():
 				elif dt >= nextWeekRange[0]:
 					return "future"
 				else:
+					logger.info("Unable to find date group for: " + dt)
 					return None
 			except Exception as e:
-				print "Trouble parsing dates"
-				print e
+				logger.info("Trouble parsing dates")
+				logger.info(e)
 				return None
 
 	@staticmethod
-	def thisWeekOrLater(dt):
-		return (DateHandling.getGroupFromDate(dt) in ['this_week', 'next_week', 'future'])
+	def thisWeekOrLater(dt, logger):
+		return (DateHandling.getGroupFromDate(dt, logger) in ['this_week', 'next_week', 'future'])
 
 	@staticmethod
 	def getThisWeekRange():
@@ -71,6 +73,10 @@ class DateHandling():
 	@staticmethod
 	def today():
 		return datetime.today()
+
+	@staticmethod
+	def dateToDatetime(dateInput):
+		return datetime.combine(dateInput, time.min)
 
 		
 
