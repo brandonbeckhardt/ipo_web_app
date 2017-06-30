@@ -1,11 +1,11 @@
 import uuid
 # Create 
 db.define_table('data_sources',
-                    Field('uuid',length=64,default=lambda:str(uuid.uuid4())),
+                    Field('uuid',length=64,default=lambda:str(uuid.uuid4()),readable=False, writable=False),
                     Field('modified_on', 'datetime', default=request.now, readable=False, writable=False),
                     Field('created_on', 'datetime', default=request.now, readable=False, writable=False),
-                    Field('data_migration_id',length=64),
-                    Field('company_id',length=64,notnull=True),
+                    Field('data_migration_id',length=64,readable=False, writable=False),
+                    Field('company_id',length=64,notnull=True,readable=False, writable=False),
                     Field('sources',type='string')
                    )
 

@@ -169,7 +169,7 @@ button.add_company {
 	margin: 0px 0px 20px 0px;
 	padding: 10px 0px;
 }
-textarea.company_description_textarea {
+textarea.description_textarea {
 	width: 50%;
 	height:200px;
 }

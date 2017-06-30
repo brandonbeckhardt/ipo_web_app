@@ -101,9 +101,15 @@ def add_company():
         description.company_id.writable =  description.company_id.readable = False
         description.data_migration_id.writable = description.data_migration_id.readable = False
         description.uuid.writable = description.uuid.readable = False
-        description.description.widget=lambda field, value: SQLFORM.widgets.text.widget(field, value, _class="company_description_textarea")
+        description.description.widget=lambda field, value: SQLFORM.widgets.text.widget(field, value, _class="description_textarea")
 
-        record = db((db.company_info.uuid == request.args(0)) & (db.ipo_info.company_id == request.args(0)) & (db.company_description.company_id == request.args(0))).select().first()
+        data_sources = db.data_sources
+        data_sources.sources.widget=lambda field, value: SQLFORM.widgets.text.widget(field, value, _class="description_textarea")
+
+
+        record = db((db.company_info.uuid == request.args(0)) 
+            & (db.ipo_info.company_id == request.args(0)) 
+            & (db.company_description.company_id == request.args(0))).select().first()
         if record:
             message = 'Update company Information'
             dictRecord = {}
@@ -117,11 +123,11 @@ def add_company():
             add_custom_fields(form, url_info, record.company_info.uuid, record.ipo_info.uuid)
             if form.process().accepted:
                 form.vars.company_id=form.vars.uuid
-                id = record.company_info.update_record(**db.company_info._filter_fields(form.vars))
+                record.company_info.update_record(**db.company_info._filter_fields(form.vars))
                 form.vars.company_id = record.company_info.uuid #get the company's uuid5
-                id = record.ipo_info.update_record(**db.ipo_info._filter_fields(form.vars))
-                id = record.company_description.update_record(**db.company_description._filter_fields(form.vars))
-
+                record.ipo_info.update_record(**db.ipo_info._filter_fields(form.vars))
+                record.company_description.update_record(**db.company_description._filter_fields(form.vars))
+                # record.data_sources.update_record(**db.data_sources._filter_fields(form.vars))
                 save_custom_field_values(form, url_info, record.company_info.uuid, record.ipo_info.uuid)
 
                 response.flash = 'form accepted'
@@ -135,11 +141,15 @@ def add_company():
             add_custom_fields(form, False, None, None)
 
             if form.process().accepted:
-                id = db.company_info.insert(**db.company_info._filter_fields(form.vars))
-                form.vars.company_id = db(db.company_info.id == id).select(db.company_info.uuid).first().uuid #get the company's uuid
-                id = db.ipo_info.insert(**db.ipo_info._filter_fields(form.vars))
-                id = db.company_description.insert(**db.company_description._filter_fields(form.vars))
-                save_custom_field_values(form, None, record.company_info.uuid, record.ipo_info.uuid)
+                company_id = db.company_info.insert(**db.company_info._filter_fields(form.vars))
+                form.vars.company_id = db(db.company_info.id == company_id).select(db.company_info.uuid).first().uuid #get the company's uuid
+                ipo_id = db.ipo_info.insert(**db.ipo_info._filter_fields(form.vars))
+                ipo_info_uuid = ""
+                if form.vars.broker_url and form.vars.broker_url != "":
+                    ipo_info_uuid = db(db.ipo_info.id == ipo_id).select(db.ipo_info.uuid).first().uuid #get the ipo uuid
+                db.company_description.insert(**db.company_description._filter_fields(form.vars))
+                # db.data_sources.insert(**db.data_sources._filter_fields(form.vars))
+                save_custom_field_values(form, None, form.vars.company_id, ipo_info_uuid)
                 response.flash = 'Form accepted'
             elif form.errors:
                 response.flash = 'Form has errors and was not submitted - please see below for details'
@@ -205,21 +215,22 @@ def add_custom_fields(form, url_info, company_reference, ipo_reference):
             if url_item.reference_id == ipo_reference and url_item.is_primary:
                 if url_item.type == UrlTypes.BROKER_URL['enum']:
                     broker_value = url_item.url
-                
+    
+    customVarsOffset = 6
     public_url_label = TR(LABEL('Public Company URL:'))
     public_url_input = TR(INPUT(_name='public_url',_type='text',_value=public_company_value))
-    form[0].insert(len(form[0])-4, public_url_label)
-    form[0].insert(len(form[0])-4, public_url_input)
+    form[0].insert(len(form[0])-customVarsOffset, public_url_label)
+    form[0].insert(len(form[0])-customVarsOffset, public_url_input)
 
     private_url_label = TR(LABEL('Private Company URL:'))
     private_url_input = TR(INPUT(_name='private_url',_type='text',_value=private_company_value))
-    form[0].insert(len(form[0])-4, private_url_label)
-    form[0].insert(len(form[0])-4, private_url_input)
+    form[0].insert(len(form[0])-customVarsOffset, private_url_label)
+    form[0].insert(len(form[0])-customVarsOffset, private_url_input)
 
     broker_url_label = TR(LABEL('Broker Company URL:'))
     broker_url_input = TR(INPUT(_name='broker_url',_type='text',_value=broker_value))
-    form[0].insert(len(form[0])-4, broker_url_label)
-    form[0].insert(len(form[0])-4, broker_url_input)
+    form[0].insert(len(form[0])-customVarsOffset, broker_url_label)
+    form[0].insert(len(form[0])-customVarsOffset, broker_url_input)
 
 
 

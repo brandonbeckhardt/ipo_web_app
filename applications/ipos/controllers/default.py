@@ -69,9 +69,10 @@ def matcher():
 
     thisWeekRange = DateHandling.getThisWeekRange()
     companyData = db().select(db.ipo_info.ALL, db.company_info.ALL, db.company_description.ALL,
-        join=[
+        left=[
         db.company_info.on(db.company_info.uuid == db.ipo_info.company_id), 
         db.company_description.on(db.company_description.company_id == db.ipo_info.company_id)])
+    logger.info('Number of companies pulled =' + str(len(companyData)))
 
     urlData = db((db.url_info.type == UrlTypes.PUBLIC_COMPANY_URL['enum'] 
         or db.url_info.type == UrlTypes.PRIVATE_COMPANY_URL['enum']

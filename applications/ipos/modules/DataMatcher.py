@@ -35,22 +35,23 @@ class DataMatcher:
 
 		company_map = None
 		has_matched = False
-		if description:
-			if self.match_all:
-				company_map = {'company_name':company_name,'keyWordMatches':[],
-				'description':description, 'company_id':company_info.company_info.uuid, 
-				'ipo_date':company_info.ipo_info.date}
-				has_matched = True
-			else:
-				lowerCaseDescription = description.lower()
-				for keyWord in self.keyWords:
-					if lowerCaseDescription.find(keyWord) > -1:
-						if has_matched:
-							company_map['keyWordMatches'] = company_map['keyWordMatches'] + [keyWord]
-						else:
-							company_map = {'company_name':company_name,'keyWordMatches':[keyWord],
-							'description':description, 'ipo_date':company_info.ipo_info.date, 'company_id':company_info.company_info.uuid}
-							has_matched = True
+		if not description:
+			description = ""
+		if self.match_all:
+			company_map = {'company_name':company_name,'keyWordMatches':[],
+			'description':description, 'company_id':company_info.company_info.uuid, 
+			'ipo_date':company_info.ipo_info.date}
+			has_matched = True
+		else:
+			lowerCaseDescription = description.lower()
+			for keyWord in self.keyWords:
+				if lowerCaseDescription.find(keyWord) > -1:
+					if has_matched:
+						company_map['keyWordMatches'] = company_map['keyWordMatches'] + [keyWord]
+					else:
+						company_map = {'company_name':company_name,'keyWordMatches':[keyWord],
+						'description':description, 'ipo_date':company_info.ipo_info.date, 'company_id':company_info.company_info.uuid}
+						has_matched = True
 		if has_matched:
 			self.matches[group].append(company_map)
 		return

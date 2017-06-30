@@ -17,10 +17,6 @@ class UrlHandler:
 		self.otherUrls = {}
 
 		self.handleUrls()
-		self.logger.info("PRIVATE COMPANIES")
-		self.logger.info(self.privateCompanyUrls)
-		self.logger.info("PUBLIC COMPANIES")
-		self.logger.info(self.publicCompanyUrls)
 
 
 	def handleUrls(self):
