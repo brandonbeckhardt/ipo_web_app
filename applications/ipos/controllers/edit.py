@@ -99,7 +99,7 @@ def add_company():
         ipo_info.date_week.widget=SQLFORM.widgets.date.widget
 
         data_sources = db.data_sources
-        data_sources.sources.widget=lambda field, value: SQLFORM.widgets.text.widget(field, value, _class="description_textarea")
+        # data_sources.sources.widget=lambda field, value: SQLFORM.widgets.text.widget(field, value, _class="description_textarea")
 
         record = db(db.company_info.uuid == request.args(0)).select(db.ipo_info.ALL, db.company_info.ALL, db.data_sources.ALL,
         left=[db.company_info.on(db.company_info.uuid == db.ipo_info.company_id), db.data_sources.on(db.ipo_info.company_id == db.data_sources.company_id) ]).first()

@@ -182,6 +182,11 @@ form.add_or_edit_company>table {
 div.add_company_wrapper {
 	padding: 0% 3% 10% 3%;
 }
+p.company_description {
+    word-break: break-word;
+    text-align: left;
+    white-space: pre-line;
+}
 
 /* 
 Max width before this PARTICULAR table gets nasty

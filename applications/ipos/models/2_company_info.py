@@ -8,7 +8,7 @@ db.define_table('company_info',
                     Field('ticker',type='string'),
                     Field('exchange',type='string'),
                     Field('country',type='string'),
-                    Field('description',type='string',notnull=True,default=""),
+                    Field('description',type='text',notnull=True,default=""),
                     Field('data_migration_id',length=64),
                     format='%(name)'
                 )

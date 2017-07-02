@@ -6,7 +6,7 @@ db.define_table('data_sources',
                     Field('created_on', 'datetime', default=request.now, readable=False, writable=False),
                     Field('data_migration_id',length=64,readable=False, writable=False),
                     Field('company_id',length=64,notnull=True,readable=False, writable=False),
-                    Field('sources',type='string')
+                    Field('sources',type='text')
                    )
 
 db.executesql('CREATE INDEX IF NOT EXISTS DATA_SOURCES_UUID_IDX ON data_sources (uuid);')
