@@ -78,5 +78,9 @@ class DateHandling():
 	def dateToDatetime(dateInput):
 		return datetime.combine(dateInput, time.min)
 
+	@staticmethod
+	def dateForDisplay(dateInput):
+		return dateInput.strftime("%m/%d/%y")
+
 		
 

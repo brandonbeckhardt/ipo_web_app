@@ -1,3 +1,5 @@
+from DateHandling import DateHandling
+
 class MatchObject:
 	def __init__(self, companyInfo, keyWords):
 		self.companyName = None
@@ -15,4 +17,4 @@ class MatchObject:
 		self.description = companyInfo.company_info.description
 		self.companyId = companyInfo.company_info.uuid
 		self.keyWordMatches = keyWords
-		self.ipoDate = companyInfo.ipo_info.date
+		self.ipoDate = DateHandling.dateForDisplay(companyInfo.ipo_info.date)
