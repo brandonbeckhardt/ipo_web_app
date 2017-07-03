@@ -5,7 +5,7 @@ db.define_table('data_migration',
                     Field('modified_on', 'datetime', default=request.now, readable=False, writable=False),
                     Field('created_on', 'datetime', default=request.now, readable=False, writable=False),
                     #Datetime the data source was last exported (through csv)
-                    Field('export_time', 'datetime'), 
+                    Field('export_time', 'datetime', default=request.now), 
                     #Datetime the data source was last imported (through csv)
                     Field('import_time', 'datetime'), 
                     #Date the migration was created
