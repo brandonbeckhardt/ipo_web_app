@@ -30,10 +30,10 @@ class UrlHandler:
 
 	def getCompanyUrl(self, group, match):
 		url = ""
-		if match['company_id'] in self.publicCompanyUrls and self.publicCompanyUrls[match['company_id']].url != "":
-			url = self.publicCompanyUrls[match['company_id']].url
-		elif match['company_id'] in self.privateCompanyUrls:
-			url = self.privateCompanyUrls[match['company_id']].url
+		if match.companyId in self.publicCompanyUrls and self.publicCompanyUrls[match.companyId].url != "":
+			url = self.publicCompanyUrls[match.companyId].url
+		elif match.companyId in self.privateCompanyUrls:
+			url = self.privateCompanyUrls[match.companyId].url
 
 		if url != "":
 			if (url[:4] != 'http' and url[:5] != 'https'):

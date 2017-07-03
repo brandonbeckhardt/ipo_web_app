@@ -3,6 +3,7 @@ import re
 import threading
 import time
 from DateHandling import DateHandling
+from data_model.Match import MatchObject
 
 import logging
 
@@ -33,27 +34,24 @@ class DataMatcher:
 		ticker = company_info.company_info.ticker
 		description = company_info.company_info.description
 
-		company_map = None
-		has_matched = False
+		matchObject = None
 		if not description:
 			description = ""
 		if self.match_all:
-			company_map = {'company_name':company_name,'keyWordMatches':[],
-			'description':description, 'company_id':company_info.company_info.uuid, 
-			'ipo_date':company_info.ipo_info.date}
-			has_matched = True
+			matchObject = MatchObject(company_info, [])
+			# company_map = {'company_name':company_name,'keyWordMatches':[],
+			# 'description':description, 'company_id':company_info.company_info.uuid, 
+			# 'ipo_date':company_info.ipo_info.date}
 		else:
 			lowerCaseDescription = description.lower()
 			for keyWord in self.keyWords:
 				if lowerCaseDescription.find(keyWord) > -1:
-					if has_matched:
-						company_map['keyWordMatches'] = company_map['keyWordMatches'] + [keyWord]
+					if matchObject is not None:
+						matchObject.keyWordMatches = matchObject.keyWordMatches + [keyWord]
 					else:
-						company_map = {'company_name':company_name,'keyWordMatches':[keyWord],
-						'description':description, 'ipo_date':company_info.ipo_info.date, 'company_id':company_info.company_info.uuid}
-						has_matched = True
-		if has_matched:
-			self.matches[group].append(company_map)
+						matchObject = MatchObject(company_info, [keyWord])
+		if matchObject is not None:
+			self.matches[group].append(matchObject)
 		return
 
 
