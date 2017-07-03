@@ -82,5 +82,8 @@ class DateHandling():
 	def dateForDisplay(dateInput):
 		return dateInput.strftime("%m/%d/%y")
 
+	@staticmethod
+	def dateTimeFormattedForFiles(dateInput):
+		return dateInput.strftime("%m-%d-%y_%H-%M")
 		
 

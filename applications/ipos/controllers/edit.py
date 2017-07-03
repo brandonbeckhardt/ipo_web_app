@@ -33,7 +33,8 @@ def export():
             if 'uuid' in db[table].fields and 'data_migration_id' in db[table].fields:
                 db(db[table].data_migration_id == None).update(data_migration_id=dataMigrationUuid)
         s = StringIO.StringIO()
-        filename = 'data_migration_'+dataMigrationUuid + '.csv'
+        timeStr = str(DateHandling.dateTimeFormattedForFiles(DateHandling.today()))
+        filename = 'data_migration_'+dataMigrationUuid +'_' + timeStr + '.csv'
         db.export_to_csv_file(open('applications/ipos/exports/'+filename,'wb'))
         db.export_to_csv_file(s)
         response.headers['Content-Type'] = 'text/csv'
