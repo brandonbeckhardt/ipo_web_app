@@ -12,7 +12,6 @@ db.define_table('data_sources',
 db.executesql('CREATE INDEX IF NOT EXISTS DATA_SOURCES_UUID_IDX ON data_sources (uuid);')
 db.executesql('CREATE INDEX IF NOT EXISTS DATA_SOURCES_DATA_MIGRATION_IDX ON data_sources (data_migration_id);')
 
-db.url_info._after_insert.append(lambda f, id: db(db.url_info.id == id).update_naive(modified_on=request.now))
 db.url_info._after_update.append(lambda s, f: updateModifiedOnIfModifiedOnNotUpdated(s,f)) 
 
 def updateModifiedOnIfModifiedOnNotUpdated(s,f):
