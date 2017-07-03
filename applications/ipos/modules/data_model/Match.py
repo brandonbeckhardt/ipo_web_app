@@ -17,4 +17,7 @@ class MatchObject:
 		self.description = companyInfo.company_info.description
 		self.companyId = companyInfo.company_info.uuid
 		self.keyWordMatches = keyWords
-		self.ipoDate = DateHandling.dateForDisplay(companyInfo.ipo_info.date)
+		if companyInfo.ipo_info.date is not None and companyInfo.ipo_info.date != '':
+			self.ipoDate = DateHandling.dateForDisplay(companyInfo.ipo_info.date)
+		else:
+			self.ipoDate = ''

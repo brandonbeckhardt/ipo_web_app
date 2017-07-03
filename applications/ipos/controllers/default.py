@@ -67,7 +67,6 @@ def matcher():
 
     time_to_expire = 60*60*24 #cache daily 
 
-    thisWeekRange = DateHandling.getThisWeekRange()
     companyData = db().select(db.ipo_info.ALL, db.company_info.ALL,
         left=[db.company_info.on(db.company_info.uuid == db.ipo_info.company_id)])
     logger.info('Number of companies pulled =' + str(len(companyData)))
