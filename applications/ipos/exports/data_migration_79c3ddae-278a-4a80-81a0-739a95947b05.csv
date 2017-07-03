@@ -1,0 +1,138 @@
+TABLE data_migration
+data_migration.id,data_migration.uuid,data_migration.modified_on,data_migration.created_on,data_migration.export_time,data_migration.import_time,data_migration.created_time,data_migration.source,data_migration.type
+7,52d37c02-d80c-40ca-b8be-6283398f2b67,2017-07-02 17:02:51,2017-07-02 16:17:10,2017-07-02 16:17:10,<NULL>,2017-07-02 16:17:10,export,|DATA_MIGRATION|ALL|
+8,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-07-02 17:02:51,2017-07-02 16:58:41,2017-07-02 16:58:41,<NULL>,2017-07-02 16:58:41,export,|DATA_MIGRATION|ALL|
+9,2c820648-d53d-41cc-a5c4-2df1da294d25,2017-07-02 17:13:33,2017-07-02 17:13:33,2017-07-02 17:13:33,<NULL>,2017-07-02 17:13:33,export,|DATA_MIGRATION|ALL|
+10,b66b7d6a-3a15-457e-9a79-3ca5c116a256,2017-07-02 17:13:43,2017-07-02 17:13:43,2017-07-02 17:13:43,<NULL>,2017-07-02 17:13:43,export,|DATA_MIGRATION|ALL|
+11,16ea91a6-80ba-45e7-88e2-bd2132448208,2017-07-02 17:14:36,2017-07-02 17:14:36,2017-07-02 17:14:36,<NULL>,2017-07-02 17:14:36,export,|DATA_MIGRATION|ALL|
+12,133f9ea6-f139-4e95-a5d0-319f3e791d03,2017-07-02 17:18:58,2017-07-02 17:18:58,2017-07-02 17:18:58,<NULL>,2017-07-02 17:18:58,export,|DATA_MIGRATION|ALL|
+13,1c0f54a4-1225-4f7f-bc53-9667e086529f,2017-07-02 17:25:59,2017-07-02 17:25:59,2017-07-02 17:25:59,<NULL>,2017-07-02 17:25:59,export,|DATA_MIGRATION|ALL|
+14,abdda27c-b261-4053-b4ba-e84753ec9b64,2017-07-02 17:28:23,2017-07-02 17:28:23,2017-07-02 17:28:23,<NULL>,2017-07-02 17:28:23,export,|DATA_MIGRATION|ALL|
+15,3051d8cc-0bc8-46e2-9ce0-96b90e02e253,2017-07-02 17:30:36,2017-07-02 17:30:36,2017-07-02 17:30:36,<NULL>,2017-07-02 17:30:36,export,|DATA_MIGRATION|ALL|
+16,35d39408-1f8b-448f-a663-ebb4b17f499b,2017-07-02 17:36:48,2017-07-02 17:36:48,2017-07-02 17:36:48,<NULL>,2017-07-02 17:36:48,export,|DATA_MIGRATION|ALL|
+17,891586ba-13a6-4f3a-b423-7c4caaf46fc5,2017-07-02 17:38:07,2017-07-02 17:38:07,2017-07-02 17:38:07,<NULL>,2017-07-02 17:38:07,export,|DATA_MIGRATION|ALL|
+18,79c3ddae-278a-4a80-81a0-739a95947b05,2017-07-02 17:39:12,2017-07-02 17:39:12,2017-07-02 17:39:12,<NULL>,2017-07-02 17:39:12,export,|DATA_MIGRATION|ALL|
+
+
+TABLE company_info
+company_info.id,company_info.uuid,company_info.modified_on,company_info.created_on,company_info.name,company_info.ticker,company_info.exchange,company_info.country,company_info.description,company_info.data_migration_id
+16,a5203aa0-c852-40bc-8aa0-4ae2bee06064,2017-07-02 17:02:51,<NULL>,Hey there,T,Ex,C,Ya knooow,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+17,bd3e9b78-1b39-48fb-a45e-c4a3f7a22197,2017-07-02 17:02:51,<NULL>,Name,T,Ex,C,Desc,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+18,837594fa-b72c-42a8-8c6b-63c545fe39a5,2017-07-02 17:02:51,<NULL>,Sup,T,ex,C,"This is an example description that contains the words robot, software, and cyber.  Notice that the commas and periods do not impact the matching algorithm.  We also have can have sequencing and technology, which both match even though we only have the substrings as matches values.  Notice that APIS does not match because we have the ~+~ surrounding the word in the search.
+
+Tags: mobile, computer
+
+lfjasdlkfjsadlk;fjadkls;jflsadflsdjfsdjfkl;jsdlkfjsdal;kfjsdl;kjfdkls;ajfl;ksdajfdkls;fjadkls;fjadkls;jfkl;asdjfkls;adfjl;sdakjfldksajfl;sdkajfl'kdsjf;lkadsjfl;ksdjflkdsjfl;kadsjfaldskjf;ldskajfldskjfl;kdsjfl;dskjfl;kdsajfl;dsakfj;lsdkjfl;sdjflkdsajfl;dksjf;lksdajfldsk;jfl;kdsjfkl;dsjfl;ksdjflksdajfl;kdsjfl;kdsajfl;kasjdflksdjafl;ksdjfldksjflksajflksajdlkfjsdlkfjsadlkfjdaslkfjdsalkfjdslkfjdslkfjdsalkfjdlskjfdsalkjfsadlkjflsdkafjaslkdjflksdajfdlskajflksdajflksdjflkasdjflkdjsaflkdjslkfjasdl;kfjasld;kjfdlaks;jfsdakl;fjdaskl;fjdsa;lkfjdsalkfjdsal;kfjasdfkl
+
+
+
+This is an example description that contains the words robot, software, and cyber.  Notice that the commas and periods do not impact the matching algorithm.  We also have can have sequencing and technology, which both match even though we only have the substrings as matches values.  Notice that APIS does not match because we have the ~+~ surrounding the word in the search.
+
+Tags: mobile, computer
+
+lfjasdlkfjsadlk;fjadkls;jflsadflsdjfsdjfkl;jsdlkfjsdal;kfjsdl;kjfdkls;ajfl;ksdajfdkls;fjadkls;fjadkls;jfkl;asdjfkls;adfjl;sdakjfldksajfl;sdkajfl'kdsjf;lkadsjfl;ksdjflkdsjfl;kadsjfaldskjf;ldskajfldskjfl;kdsjfl;dskjfl;kdsajfl;dsakfj;lsdkjfl;sdjflkdsajfl;dksjf;lksdajfldsk;jfl;kdsjfkl;dsjfl;ksdjflksdajfl;kdsjfl;kdsajfl;kasjdflksdjafl;ksdjfldksjflksajflksajdlkfjsdlkfjsadlkfjdaslkfjdsalkfjdslkfjdslkfjdsalkfjdlskjfdsalkjfsadlkjflsdkafjaslkdjflksdajfdlskajflksdajflksdjflkasdjflkdjsaflkdjslkfjasdl;kfjasld;kjfdlaks;jfsdakl;fjdaskl;fjdsa;lkfjdsalkfjdsal;kfjasdfkl",8a7439ef-3abd-4255-8e9f-8481d0a1507e
+19,9ece2fb9-cf80-43c8-b835-47f29961e436,2017-07-02 17:02:51,<NULL>,Cheer,T,E,United States,Dfksdjlfkas,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+20,779790fe-ddc8-48c9-8bc4-7bb3390fcede,2017-07-02 17:02:51,<NULL>,,T,E,United States,Dfksdjlfkas,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+21,a9ea3111-af0c-41da-87fb-2770cced94d1,2017-07-02 17:02:51,<NULL>,N,T,C,C,C,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+22,ba5c7658-1300-4b07-b65e-218be699d953,2017-07-02 17:02:51,<NULL>,Name,T,Ex,C,Desc,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+23,e70c0f94-60c4-40a6-b885-de15bce8d4ed,2017-07-02 17:02:51,2017-06-20 19:31:27,Heythere,Tick,Ex,C,,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+24,9bf29c29-ebc8-4f1b-8587-d4ae8867ddc0,2017-07-02 17:02:51,2017-06-25 17:21:16,Hey,Ticker,Ex,C,"	This is an example description that contains the words robot, software, and cyber. Notice that the commas and periods do not impact the matching algorithm. We also have can have sequencing and technology, which both match even though we only have the substrings as matches values. Notice that APIS does not match because we have the ~+~ surrounding the word in the search. 
+
+Tags: mobile, computer 
+
+lfjasdlkfjsadlk;fjadkls;jflsadflsdjfsdjfkl;jsdlkfjsdal;kfjsdl;kjfdkls;ajfl;ksdajfdkls;fjadkls;fjadkls;jfkl;asdjfkls;adfjl;sdakjfldksajfl;sdkajfl'kdsjf;lkadsjfl;ksdjflkdsjfl;kadsjfaldskjf;ldskajfldskjfl;kdsjfl;dskjfl;kdsajfl;dsakfj;lsdkjfl;sdjflkdsajfl;dksjf;lksdajfldsk;jfl;kdsjfkl;dsjfl;ksdjflksdajfl;kdsjfl;kdsajfl;kasjdflksdjafl;ksdjfldksjflksajflksajdlkfjsdlkfjsadlkfjdaslkfjdsalkfjdslkfjdslkfjdsalkfjdlskjfdsalkjfsadlkjflsdkafjaslkdjflksdajfdlskajflksdajflksdjflkasdjflkdjsaflkdjslkfjasdl;kfjasld;kjfdlaks;jfsdakl;fjdaskl;fjdsa;lkfjdsalkfjdsal;kfjasdfkl This is an example description that contains the words robot, software, and cyber. Notice that the commas and periods do not impact the matching algorithm. We also have can have sequencing and technology, which both match even though we only have the substrings as matches values. Notice that APIS does not match because we have the ~+~ surrounding the word in the search. Tags: mobile, computer 
+
+lfjasdlkfjsadlk;fjadkls;jflsadflsdjfsdjfkl;jsdlkfjsdal;kfjsdl;kjfdkls;ajfl;ksdajfdkls;fjadkls;fjadkls;jfkl;asdjfkls;adfjl;sdakjfldksajfl;sdkajfl'kdsjf;lkadsjfl;ksdjflkdsjfl;kadsjfaldskjf;ldskajfldskjfl;kdsjfl;dskjfl;kdsajfl;dsakfj;lsdkjfl;sdjflkdsajfl;dksjf;lksdajfldsk;jfl;kdsjfkl;dsjfl;ksdjflksdajfl;kdsjfl;kdsajfl;kasjdflksdjafl;ksdjfldksjflksajflksajdlkfjsdlkfjsadlkfjdaslkfjdsalkfjdslkfjdslkfjdsalkfjdlskjfdsalkjfsadlkjflsdkafjaslkdjflksdajfdlskajflksdajflksdjflkasdjflkdjsaflkdjslkfjasdl;kfjasld;kjfdlaks;jfsdakl;fjdaskl;fjdsa;lkfjdsalkfjdsal;kfjasdfkl",8a7439ef-3abd-4255-8e9f-8481d0a1507e
+25,e1985ee6-92a7-4b42-9a72-33192241fcb3,2017-07-02 17:02:51,2017-06-29 18:08:02,df,sdf,dsf,sdf,,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+26,72a78d3f-b14c-4214-8c00-8b2194482389,2017-07-02 17:02:51,2017-06-29 18:11:10,sdf,sdfa,dsf,Algeria,,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+27,ac1a1858-bf91-4c4c-8621-10607059e6e6,2017-07-02 17:02:51,2017-06-29 18:16:56,NEWNEW,T,Ex,C,,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+28,f514e583-0a23-4502-b720-fa953ee744dc,2017-07-02 17:02:51,2017-06-29 18:17:51,NENE,T,E,C,,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+29,8e61ec51-a2c8-41fe-8665-9fda396e8f7b,2017-07-02 17:02:51,2017-06-29 18:46:07,Big Test,T,Ex,C,,8a7439ef-3abd-4255-8e9f-8481d0a1507e
+30,d6379dcd-fc5b-400d-91ec-2fc1006e67d1,2017-07-02 17:02:51,2017-07-02 16:50:10,Hey33,T,Ex,C,Desccc,2c820648-d53d-41cc-a5c4-2df1da294d25
+
+
+TABLE ipo_info
+ipo_info.id,ipo_info.uuid,ipo_info.modified_on,ipo_info.created_on,ipo_info.company_id,ipo_info.data_migration_id,ipo_info.date,ipo_info.date_week,ipo_info.broker
+16,5bafc067-1a2b-47d9-ac38-a74357c078ab,2017-07-02 17:02:51,<NULL>,a5203aa0-c852-40bc-8aa0-4ae2bee06064,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-06,2017-06-06,B
+17,a8a968ca-f855-4b5c-83da-505b86f9be2b,2017-07-02 17:02:51,<NULL>,bd3e9b78-1b39-48fb-a45e-c4a3f7a22197,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-06,2017-06-07,B
+18,07e97503-85b9-4d8d-96e1-8c700757c0f7,2017-07-02 17:02:51,<NULL>,837594fa-b72c-42a8-8c6b-63c545fe39a5,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-06,future,B
+19,faf88b9c-46e0-4b9d-98a2-c684c923cd84,2017-07-02 17:02:51,<NULL>,9ece2fb9-cf80-43c8-b835-47f29961e436,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-07,2017-06-07,B
+20,a235de63-f548-4629-b28a-cff55d295dcc,2017-07-02 17:02:51,<NULL>,779790fe-ddc8-48c9-8bc4-7bb3390fcede,8a7439ef-3abd-4255-8e9f-8481d0a1507e,<NULL>,,B
+21,2d21e9c6-3adb-4ca6-aa6b-2b1c30264db9,2017-07-02 17:02:51,<NULL>,a9ea3111-af0c-41da-87fb-2770cced94d1,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-07,D,B
+22,113cf822-9a4a-43f0-9555-36f340414f4c,2017-07-02 17:02:51,<NULL>,ba5c7658-1300-4b07-b65e-218be699d953,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-06,2017-06-06,B
+23,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2017-07-02 17:02:51,2017-06-20 19:31:27,e70c0f94-60c4-40a6-b885-de15bce8d4ed,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-21,2017-06-21,Broker
+24,560cd2f8-92ca-493d-a0fe-d8c3b3b5e645,2017-07-02 17:02:51,2017-06-25 17:21:16,9bf29c29-ebc8-4f1b-8587-d4ae8867ddc0,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-26,2017-06-26,
+25,7abd7ace-11d7-4161-a46b-212bfb710606,2017-07-02 17:02:51,2017-06-29 18:08:02,e1985ee6-92a7-4b42-9a72-33192241fcb3,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-29,2017-06-29,sf
+26,d2a3bb1e-4482-4468-a054-9c1b3eff4ab9,2017-07-02 17:02:51,2017-06-29 18:11:10,72a78d3f-b14c-4214-8c00-8b2194482389,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-22,2017-06-22,d
+27,77528078-45f8-4599-a3ee-70145328a1c1,2017-07-02 17:02:51,2017-06-29 18:16:56,ac1a1858-bf91-4c4c-8621-10607059e6e6,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-29,2017-06-29,broker
+28,f29ae9e6-474c-4803-b089-100ee08dfd79,2017-07-02 17:02:51,2017-06-29 18:17:51,f514e583-0a23-4502-b720-fa953ee744dc,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-29,2017-06-29,b
+29,e7c277e3-d626-4c79-93b6-142677dcef9c,2017-07-02 17:02:51,2017-06-29 18:46:07,8e61ec51-a2c8-41fe-8665-9fda396e8f7b,8a7439ef-3abd-4255-8e9f-8481d0a1507e,2017-06-29,2017-06-29,
+30,7aeb2968-9880-4b44-a2e9-1f300ef4ed30,2017-07-02 17:02:51,2017-07-02 16:50:10,d6379dcd-fc5b-400d-91ec-2fc1006e67d1,2c820648-d53d-41cc-a5c4-2df1da294d25,2017-07-03,2017-07-03,Broker
+
+
+TABLE url_info
+url_info.id,url_info.uuid,url_info.modified_on,url_info.created_on,url_info.data_migration_id,url_info.reference_id,url_info.type,url_info.is_primary,url_info.url,url_info.label
+66,<NULL>,2017-07-02 17:02:51,<NULL>,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,google2.com,<NULL>
+67,<NULL>,2017-07-02 17:02:51,<NULL>,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,2,True,googles.com,<NULL>
+68,f0f50a39-a127-4d3e-b590-47c3d327e464,2017-07-02 17:02:51,2017-06-25 20:12:34,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+69,e4938e15-a155-49b7-8d8f-e906ca8740a9,2017-07-02 17:02:51,2017-06-25 20:12:34,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+70,c9a4f693-d135-48f1-a79e-90dc95082c45,2017-07-02 17:02:51,2017-06-25 20:12:42,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+71,647283a5-0abe-44eb-afdc-b715fcc6b79b,2017-07-02 17:02:51,2017-06-25 20:12:42,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+72,b1cc8067-d1b1-411e-8b6d-f3e14fb05c45,2017-07-02 17:02:51,2017-06-25 20:12:49,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+73,4b66e286-0b74-47f9-a0aa-f6eae440164e,2017-07-02 17:02:51,2017-06-25 20:13:15,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+74,fd31adb2-295f-4d34-9506-3cd487e3b46d,2017-07-02 17:02:51,2017-06-25 20:13:15,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+75,eeefd44a-8a8b-46ad-a9e2-05bf93dd5748,2017-07-02 17:02:51,2017-06-25 20:18:37,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+76,e4d84134-2ec3-488a-9734-dedd9589252b,2017-07-02 17:02:51,2017-06-25 20:18:37,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+77,aa09b686-0543-42ee-97a6-cc6e83578f20,2017-07-02 17:02:51,2017-06-25 20:19:15,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+78,a7a6d29f-0ee0-4545-83ee-30b68c816994,2017-07-02 17:02:51,2017-06-25 20:19:15,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+79,b36ac222-3c4e-4e1d-8a11-7e2a58be4ef2,2017-07-02 17:02:51,2017-06-25 20:19:29,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+80,873f8a32-868b-416e-8bcf-7046a9d6cf21,2017-07-02 17:02:51,2017-06-25 20:19:29,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+81,0b03ab47-57b6-4287-974d-40340a54c2d3,2017-07-02 17:02:51,2017-06-25 20:22:06,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+82,aa9e1c45-53c7-41cc-a257-30e88211b595,2017-07-02 17:02:51,2017-06-25 20:22:22,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+83,c088fc7b-9c8e-4d78-afa6-b1d8759a97e1,2017-07-02 17:02:51,2017-06-25 20:22:22,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+84,650d12a6-f107-4238-bb78-289af58f2fb8,2017-07-02 17:02:51,2017-06-25 20:29:17,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+85,f8269261-320b-4de1-b71b-766c6a375fa0,2017-07-02 17:02:51,2017-06-25 20:29:17,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+86,294812c5-9f64-418e-b60f-35a8800b34bd,2017-07-02 17:02:51,2017-06-25 20:29:35,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+87,ff6e48c2-c309-4423-bfad-15692e880131,2017-07-02 17:02:51,2017-06-25 20:29:35,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+88,6c843e19-2f71-4101-b836-a2d92395d5a1,2017-07-02 17:02:51,2017-06-25 20:39:41,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+90,71e7c772-b68e-449b-8a83-08f32701ebcc,2017-07-02 17:02:51,2017-06-25 20:39:48,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+91,210d4d94-3a1d-49a7-8a53-e531fb31ade9,2017-07-02 17:02:51,2017-06-25 20:39:48,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+92,0fb2f78f-fbdd-47b6-a2b1-cdf1c952628b,2017-07-02 17:02:51,2017-06-25 20:41:50,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+93,b8b42a93-5916-4d61-a8ae-ad0964604b3e,2017-07-02 17:02:51,2017-06-25 20:41:50,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+95,46f9bb04-faa7-4238-833f-7a5185606410,2017-07-02 17:02:51,2017-06-25 20:42:09,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+96,cccdf920-c7b2-4c29-93b8-c5b1b51d0311,2017-07-02 17:02:51,2017-06-25 20:42:09,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+98,f974a60a-a3ac-4b04-a9b2-b4101384904f,2017-07-02 17:02:51,2017-06-25 20:43:15,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+99,3e427347-efdf-405a-9888-156f37d34d77,2017-07-02 17:02:51,2017-06-25 20:43:15,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+101,8f14b880-e137-4291-bf50-9cd52fbab8d5,2017-07-02 17:02:51,2017-06-25 20:44:46,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+102,ab780692-7796-4e71-9d29-f4b2f604146a,2017-07-02 17:02:51,2017-06-25 20:44:46,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+104,68bdc179-85d2-4176-acc5-75d682e9878c,2017-07-02 17:02:51,2017-06-25 20:45:38,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+105,732e3af1-c6fb-41a2-bec5-ae939e8ca937,2017-07-02 17:02:51,2017-06-25 20:45:38,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+107,f4d6ee81-ca58-4ec8-896a-e2d74879e4a1,2017-07-02 17:02:51,2017-06-25 20:46:27,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+108,37e7d767-086c-4b22-b4b5-c02919c58179,2017-07-02 17:02:51,2017-06-25 20:46:27,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+110,2fd329c2-87b8-4ad6-82a1-0013e508f0b4,2017-07-02 17:02:51,2017-06-25 20:52:09,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,1,True,YO,<NULL>
+111,ffc1bdd3-aaf2-4268-9313-1c02cebb45a4,2017-07-02 17:02:51,2017-06-25 20:52:09,8a7439ef-3abd-4255-8e9f-8481d0a1507e,fa54d1b3-d6fa-44dc-a731-46c11f0a719a,2,True,WHATS UP,<NULL>
+117,bf0c860c-5b66-49ff-921a-d99460e86b3a,2017-07-02 17:02:51,2017-06-29 14:08:34,8a7439ef-3abd-4255-8e9f-8481d0a1507e,5bafc067-1a2b-47d9-ac38-a74357c078ab,2,True,hey1.com,<NULL>
+118,d0e966f5-d9a4-4bf0-9a97-030cd51b01dc,2017-07-02 17:02:51,2017-06-29 14:08:40,8a7439ef-3abd-4255-8e9f-8481d0a1507e,5bafc067-1a2b-47d9-ac38-a74357c078ab,3,True,hey3.com,<NULL>
+122,8bd58535-c086-4121-aae5-dac5ae2dd3a4,2017-07-02 17:02:51,2017-06-29 18:08:02,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e1985ee6-92a7-4b42-9a72-33192241fcb3,1,True,dsf,<NULL>
+123,0e3f0812-b9e4-4bd6-bd3d-abf6dc922dcf,2017-07-02 17:02:51,2017-06-29 18:08:02,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e1985ee6-92a7-4b42-9a72-33192241fcb3,2,True,sdf,<NULL>
+124,d75ee20b-2ef1-4f30-95ea-08623768729e,2017-07-02 17:02:51,2017-06-29 18:08:02,8a7439ef-3abd-4255-8e9f-8481d0a1507e,7abd7ace-11d7-4161-a46b-212bfb710606,3,True,dsf,<NULL>
+125,c06b21e1-07bc-4bac-abfc-d8e4fedfad87,2017-07-02 17:02:51,2017-06-29 18:17:51,8a7439ef-3abd-4255-8e9f-8481d0a1507e,f514e583-0a23-4502-b720-fa953ee744dc,1,True,hey,<NULL>
+126,14084bd6-4eaf-4e67-aa9d-3a757d94ed21,2017-07-02 17:02:51,2017-06-29 18:17:51,8a7439ef-3abd-4255-8e9f-8481d0a1507e,f514e583-0a23-4502-b720-fa953ee744dc,2,True,hey,<NULL>
+127,9501f567-da82-4297-a05a-fa16e1a290d9,2017-07-02 17:02:51,2017-06-29 18:17:51,8a7439ef-3abd-4255-8e9f-8481d0a1507e,f29ae9e6-474c-4803-b089-100ee08dfd79,3,True,hey,<NULL>
+128,232a44f2-f27b-46d8-9578-283d65b5681e,2017-07-02 17:02:51,2017-06-29 18:55:44,8a7439ef-3abd-4255-8e9f-8481d0a1507e,837594fa-b72c-42a8-8c6b-63c545fe39a5,1,True,hey.com,<NULL>
+130,c86380a3-1fa6-4def-951c-1547609b5896,2017-07-02 17:02:51,2017-06-29 20:22:18,8a7439ef-3abd-4255-8e9f-8481d0a1507e,9bf29c29-ebc8-4f1b-8587-d4ae8867ddc0,1,True,testing.com,<NULL>
+
+
+TABLE data_sources
+data_sources.id,data_sources.uuid,data_sources.modified_on,data_sources.created_on,data_sources.data_migration_id,data_sources.company_id,data_sources.sources
+9,<NULL>,2017-07-02 16:58:41,<NULL>,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e70c0f94-60c4-40a6-b885-de15bce8d4ed,hey whas up
+10,260d8801-4709-4534-9c12-1d8564e8b29a,2017-07-02 16:58:41,2017-06-29 18:08:02,8a7439ef-3abd-4255-8e9f-8481d0a1507e,e1985ee6-92a7-4b42-9a72-33192241fcb3,sdf
+11,a1f3963e-3581-4aa2-bf77-c429ee23f890,2017-07-02 16:58:41,2017-06-29 18:11:10,8a7439ef-3abd-4255-8e9f-8481d0a1507e,72a78d3f-b14c-4214-8c00-8b2194482389,
+12,79e392ae-b894-4314-aca4-7247c7f8a4d7,2017-07-02 16:58:41,2017-06-29 18:16:56,8a7439ef-3abd-4255-8e9f-8481d0a1507e,ac1a1858-bf91-4c4c-8621-10607059e6e6,<NULL>
+13,c3e794ce-a7b0-460b-bdb7-200a965ed936,2017-07-02 16:58:41,2017-06-29 18:17:51,8a7439ef-3abd-4255-8e9f-8481d0a1507e,f514e583-0a23-4502-b720-fa953ee744dc,<NULL>
+14,b7272f7f-2890-4581-9c95-ad4465b2d343,2017-07-02 16:58:41,2017-06-29 18:46:07,8a7439ef-3abd-4255-8e9f-8481d0a1507e,8e61ec51-a2c8-41fe-8665-9fda396e8f7b,<NULL>
+15,f382968e-b44d-401a-b8a7-441296d97e69,2017-07-02 16:58:41,2017-06-29 20:17:17,8a7439ef-3abd-4255-8e9f-8481d0a1507e,9bf29c29-ebc8-4f1b-8587-d4ae8867ddc0,hello
+16,4c6bedcb-08e8-4ac7-9d0e-fda5e4828547,2017-07-02 16:58:41,2017-07-02 16:50:10,2c820648-d53d-41cc-a5c4-2df1da294d25,d6379dcd-fc5b-400d-91ec-2fc1006e67d1,Sources
+
+
+END

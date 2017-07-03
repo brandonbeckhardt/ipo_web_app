@@ -20,7 +20,6 @@ import os
 import StringIO
 import uuid
 
-
 import logging
 logger = logging.getLogger("web2py.app.ipos")
 logger.setLevel(logging.DEBUG)
@@ -28,14 +27,17 @@ logger.setLevel(logging.DEBUG)
 # Create new data source and have all data reference this data source.  From there, export db
 def export():
     if request.cookies.has_key('authenticate') and request.cookies['authenticate'].value == 'true':
-        dataSourceUuid = str(uuid.uuid4())
-        db.data_migration.insert(uuid=dataSourceUuid, source='export',type=[DataSourceTypes.DATA_MIGRATION, DataSourceTypes.ALL])
+        dataMigrationUuid = str(uuid.uuid4())
+        db.data_migration.insert(uuid=dataMigrationUuid, source='export',type=[DataSourceTypes.DATA_MIGRATION, DataSourceTypes.ALL])
         for table in db.tables:
             if 'uuid' in db[table].fields and 'data_migration_id' in db[table].fields:
-                db(db[table].data_migration_id == None).update(data_migration_id=dataSourceUuid)
+                db(db[table].data_migration_id == None).update(data_migration_id=dataMigrationUuid)
         s = StringIO.StringIO()
+        filename = 'data_migration_'+dataMigrationUuid + '.csv'
+        db.export_to_csv_file(open('applications/ipos/exports/'+filename,'wb'))
         db.export_to_csv_file(s)
         response.headers['Content-Type'] = 'text/csv'
+        response.headers['Content-disposition']='attachment; filename='+filename
         return s.getvalue()
     else:
         redirect(URL('default','matcher'))                           
