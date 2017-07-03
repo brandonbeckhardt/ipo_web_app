@@ -5,7 +5,7 @@ db.define_table('data_sources',
                     Field('modified_on', 'datetime', default=request.now, readable=False, writable=False),
                     Field('created_on', 'datetime', default=request.now, readable=False, writable=False),
                     Field('data_migration_id',length=64,readable=False, writable=False),
-                    Field('company_id',length=64,notnull=True,readable=False, writable=False),
+                    Field('company_id',length=64,readable=False, writable=False),
                     Field('sources',type='text')
                    )
 
