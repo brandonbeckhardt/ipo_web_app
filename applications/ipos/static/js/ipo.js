@@ -7,3 +7,7 @@ var showOrHideGroupTable = function(button, table) {
     	button.innerHTML = '+';
     }
 }
+
+var sortMatches = function(matchesWrapper, matches, edit, urlHandler) {
+	console.log(matches)
+}

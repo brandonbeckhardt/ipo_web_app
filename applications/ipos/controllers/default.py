@@ -15,6 +15,7 @@ from DateHandling import DateHandling
 from Enums import DataSourceTypes
 from Enums import UrlTypes
 from UrlHandler import UrlHandler
+from UrlHandler import UrlResults
 
 import json
 import os
@@ -76,7 +77,7 @@ def matcher():
         or db.url_info.type == UrlTypes.PRIVATE_COMPANY_URL['enum']
         or db.url_info.type == UrlTypes.BROKER_URL['enum']) and db.url_info.is_primary==True).select()
     
-    urlHandler = UrlHandler(urlData, logger)
+    urlResults = UrlHandler(urlData, logger).getResultsAsDict()
     matches = DataMatcher(textInput,match_all,companyData, logger).matches
     if len(matches["this_week"])==0 and len(matches["next_week"])==0 and len(matches["future"])==0 and len(matches["past"])>0 :
         groups=[("Previous IPOs","past"),("This Week", "this_week"),("Next Week","next_week"),("Future","future")]
@@ -85,6 +86,33 @@ def matcher():
     return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=textInput,edit=edit,
         show_past=showPast, urlHandler=urlHandler,match_all=match_all)
 
+def dumpJson(itm):
+    return json.dumps(itm)
+
+
+def matcher_table():
+    textInput = None
+    # open('test.csv', 'wb').write(str(db(db.company_info.id).select()))
+    # db.export_to_csv_file(open('test2.csv', 'wb'))
+    authenticated = False
+    if request.cookies.has_key('authenticate'):
+        if request.cookies['authenticate'].value == 'true':
+            authenticated = True
+
+    authenticated = False
+    if request.cookies.has_key('authenticate'):
+        if request.cookies['authenticate'].value == 'true':
+            authenticated = True
+
+    edit = False
+    if request.vars.has_key('edit') and request.vars['edit'] == "true" and authenticated:
+        edit=True
+        match_all = True
+
+    matches = request.vars.matches 
+    sortBy = request.vars.sortBy
+    # add asc
+    return dict(matches=matches[0], edit=edit, urlHandler=urlHandler)
 
 def submit_keyword_input():
     variables={}
