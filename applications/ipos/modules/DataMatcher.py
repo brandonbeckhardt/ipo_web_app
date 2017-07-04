@@ -4,6 +4,7 @@ import threading
 import time
 from DateHandling import DateHandling
 from data_model.Match import MatchObject
+import json
 
 import logging
 
@@ -51,7 +52,7 @@ class DataMatcher:
 					else:
 						matchObject = MatchObject(company_info, [keyWord])
 		if matchObject is not None:
-			self.matches[group].append(matchObject)
+			self.matches[group].append(matchObject.__dict__)
 		return
 
 
@@ -71,6 +72,9 @@ class DataMatcher:
 					t.start()	
 			for t in threads:
 				t.join()
+			for group in self.matches:
+				self.matches[group] = self.matches[group]
+
 		return
 
 
