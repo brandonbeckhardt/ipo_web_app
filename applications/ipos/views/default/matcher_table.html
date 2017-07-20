@@ -4,6 +4,11 @@
 {{response.files.append(URL('static','bootstrap/ipo.css'))}}
 {{response.files.append(URL('static','js/ipo.js'))}}
 {{include 'web2py_ajax.html'}}
+
+
+{{group_label = group[0]}}
+{{group_identifier = group[1]}}
+<div id="table_wrapper_group_{{=group_identifier}}">
 <table id="group_{{=group_identifier}}" class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
     <tr class="mobile_hide">
     	 <th><label class="mobile_hide">Company Name </label></th>
@@ -17,11 +22,13 @@
     	 	<th></th>
     	 {{pass}}
     </tr>
-	{{for match in matches[group_identifier]:}}
+
+	{{for match in matches:}}
 		<tr>
 			<td>
 			<label class="mobile_show">Company Name</label>
-			{{companyUrl = urlHandler.getCompanyUrl(group_identifier,match)}}
+
+			{{companyUrl = "" }}
 			{{if companyUrl != "":}}
 				<a target="_blank" href={{=companyUrl}}>{{=match.companyName}} </a>
 			{{else:}}
@@ -49,3 +56,4 @@
 		</tr>
 	{{pass}}
 </table>
+</div>

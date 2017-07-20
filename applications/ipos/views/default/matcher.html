@@ -58,7 +58,7 @@
 						{{if len(matches[group_identifier])>0:}}
 							<div id="table_wrapper_{{=group_identifier}}">
 								<script>
-									sortMatches(document.getElementById("table_wrapper_{{=group_identifier}}"), {{=T(dumpJson(matches[group_identifier]))}},{{=T(dumpJson(edit))}}, {{=T(dumpJson(urlResults))}})
+									sortMatches(document.getElementById("table_wrapper_{{=group_identifier}}"), {{=formatForJavaScript(matches[group_identifier])}}, {{=formatForJavaScript(group)}}, {{=formatForJavaScript(edit)}}, {{=formatForJavaScript(urlResults)}})
 								</script>
 							</div>
 	<!-- 						{{if not show_past and group_identifier == 'past':}}

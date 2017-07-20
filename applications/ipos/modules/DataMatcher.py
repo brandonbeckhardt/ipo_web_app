@@ -39,7 +39,7 @@ class DataMatcher:
 		if not description:
 			description = ""
 		if self.match_all:
-			matchObject = MatchObject(company_info, [])
+			matchObject = MatchObject(company_info, [], None)
 			# company_map = {'company_name':company_name,'keyWordMatches':[],
 			# 'description':description, 'company_id':company_info.company_info.uuid, 
 			# 'ipo_date':company_info.ipo_info.date}
@@ -50,7 +50,7 @@ class DataMatcher:
 					if matchObject is not None:
 						matchObject.keyWordMatches = matchObject.keyWordMatches + [keyWord]
 					else:
-						matchObject = MatchObject(company_info, [keyWord])
+						matchObject = MatchObject(company_info, [keyWord], None)
 		if matchObject is not None:
 			self.matches[group].append(matchObject.__dict__)
 		return
