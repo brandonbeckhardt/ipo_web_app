@@ -16,6 +16,8 @@ from Enums import DataSourceTypes
 from Enums import UrlTypes
 from UrlHandler import UrlHandler
 from UrlHandler import UrlResults
+from collections import namedtuple
+from data_model.Match import MatchObject
 
 import json
 import os
@@ -76,7 +78,7 @@ def matcher():
     urlData = db((db.url_info.type == UrlTypes.PUBLIC_COMPANY_URL['enum'] 
         or db.url_info.type == UrlTypes.PRIVATE_COMPANY_URL['enum']
         or db.url_info.type == UrlTypes.BROKER_URL['enum']) and db.url_info.is_primary==True).select()
-    
+
     urlResults = UrlHandler(urlData, logger).getResultsAsDict()
     matches = DataMatcher(textInput,match_all,companyData, logger).matches
     if len(matches["this_week"])==0 and len(matches["next_week"])==0 and len(matches["future"])==0 and len(matches["past"])>0 :
@@ -84,12 +86,15 @@ def matcher():
     else:
         groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future"),("Previous IPOs","past")]
     return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=textInput,edit=edit,
-        show_past=showPast, urlHandler=urlHandler,match_all=match_all)
+        show_past=showPast, match_all=match_all, urlResults=urlResults,  formatForJavaScript=formatForJavaScript)
 
 def dumpJson(itm):
     return json.dumps(itm)
 
+def formatForJavaScript(itm):
+    return T(json.dumps(itm))
 
+ # Will want to change how we send data in the future
 def matcher_table():
     textInput = None
     # open('test.csv', 'wb').write(str(db(db.company_info.id).select()))
@@ -107,12 +112,26 @@ def matcher_table():
     edit = False
     if request.vars.has_key('edit') and request.vars['edit'] == "true" and authenticated:
         edit=True
-        match_all = True
 
-    matches = request.vars.matches 
-    sortBy = request.vars.sortBy
+    # urlData = db((db.url_info.type == UrlTypes.PUBLIC_COMPANY_URL['enum'] 
+    #     or db.url_info.type == UrlTypes.PRIVATE_COMPANY_URL['enum']
+    #     or db.url_info.type == UrlTypes.BROKER_URL['enum']) and db.url_info.is_primary==True).select()
+    # urlHandler = UrlHandler(urlData, logger)
+    matches = None
+    if request.vars.has_key('matches') and request.vars['matches']:
+        matches = json.loads(request.vars['matches'])
+        logger.info(matches[0])
+    group = None
+    if request.vars.has_key('group') and request.vars['group']:
+        group = json.loads(request.vars['group'])
+    # sortBy = request.vars.sortBy
     # add asc
-    return dict(matches=matches[0], edit=edit, urlHandler=urlHandler)
+    logger.info("--")
+    logger.info(group)
+    matchObjects = []
+    for match in matches:
+        matchObjects.append(MatchObject(None, None, match))
+    return dict(matches=matchObjects, group=group, edit=False, urlHandler=None)
 
 def submit_keyword_input():
     variables={}
