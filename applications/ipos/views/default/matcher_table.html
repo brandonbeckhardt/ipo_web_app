@@ -4,14 +4,16 @@
 {{response.files.append(URL('static','bootstrap/ipo.css'))}}
 {{response.files.append(URL('static','js/ipo.js'))}}
 {{include 'web2py_ajax.html'}}
-
+<head>
+  <meta charset="UTF-8">
+</head>
 
 {{group_label = group[0]}}
 {{group_identifier = group[1]}}
 <div id="table_wrapper_group_{{=group_identifier}}">
 <table id="group_{{=group_identifier}}" class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
     <tr class="mobile_hide">
-    	 <th><label class="mobile_hide">Company Name </label></th>
+    	 <th><label class="mobile_hide">Company Name </label><button onclick="	sortMatches(document.getElementById('table_wrapper_{{=group_identifier}}'), {{=formatForJavaScript(matches)}}, {{=formatForJavaScript(group)}}, {{=formatForJavaScript(edit)}}, {{=formatForJavaScript(urlResults)}});">V</button></th>
     	 <th><label class="mobile_hide">Company Description</label></th>
         	 {{if group_identifier != 'future':}}
     	 	<th><label class="mobile_hide">Expected IPO Date</label></th>
@@ -30,26 +32,26 @@
 
 			{{companyUrl = "" }}
 			{{if companyUrl != "":}}
-				<a target="_blank" href={{=companyUrl}}>{{=match.companyName}} </a>
+				<a target="_blank" href={{=companyUrl}}>{{=match['companyName']}} </a>
 			{{else:}}
-				{{=match.companyName}}
+				{{=match['companyName']}}
 			{{pass}}
 			</td>
-			<td><label class="mobile_show">Company Description </label><p class="company_description">{{=match.description}}</p></td>
+			<td><label class="mobile_show">Company Description </label><p class="company_description">{{=match['description']}}</p></td>
 			{{if group_identifier != 'future':}}
-				<td><label class="mobile_show">Expected IPO Date</label>{{=match.ipoDate}}</td>
+				<td><label class="mobile_show">Expected IPO Date</label>{{=match['ipoDate']}}</td>
 			{{pass}}
-			<td><label class="mobile_show">Matched Key Words </label>{{for idx, keyWord in enumerate(match.keyWordMatches):}}
-					{{=keyWord}}{{if idx != len(match.keyWordMatches)-1:}},{{pass}}
+			<td><label class="mobile_show">Matched Key Words </label>{{for idx, keyWord in enumerate(match['keyWordMatches']):}}
+					{{=keyWord}}{{if idx != len(match['keyWordMatches'])-1:}},{{pass}}
 				{{pass}}
 			</td>
 			 {{if edit:}}
     	 	<td>
-    			<a href="edit/add_company/{{=match.companyId}}"><button type="button" class="btn btn-primary">Edit</button></a>
+    			<a href="edit/add_company/{{=match['companyId']}}"><button type="button" class="btn btn-primary">Edit</button></a>
 			</td>
 			<td>
 				<form action="edit/delete_company" method="post">
-    				<button type="submit" name="uuid" value="{{=match.companyId}}" class="btn btn-primary">X</button>
+    				<button type="submit" name="uuid" value="{{=match['companyId']}}" class="btn btn-primary">X</button>
     			</form>
 			</td>
     	 	{{pass}}

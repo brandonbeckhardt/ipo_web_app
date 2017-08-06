@@ -128,10 +128,7 @@ def matcher_table():
     # add asc
     logger.info("--")
     logger.info(group)
-    matchObjects = []
-    for match in matches:
-        matchObjects.append(MatchObject(None, None, match))
-    return dict(matches=matchObjects, group=group, edit=False, urlHandler=None)
+    return dict(matches=matches, group=group, edit=False, urlResults=None, formatForJavaScript=formatForJavaScript)
 
 def submit_keyword_input():
     variables={}

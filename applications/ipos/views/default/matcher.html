@@ -6,7 +6,11 @@
 
 {{include 'web2py_ajax.html'}}
 
+<!DOCTYPE html>
+
 <head>
+  <meta charset="UTF-8">
+  <?xml version="1.0"?>
 	<!-- Google Analytics -->
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -58,15 +62,10 @@
 						{{if len(matches[group_identifier])>0:}}
 							<div id="table_wrapper_{{=group_identifier}}">
 								<script>
-									sortMatches(document.getElementById("table_wrapper_{{=group_identifier}}"), {{=formatForJavaScript(matches[group_identifier])}}, {{=formatForJavaScript(group)}}, {{=formatForJavaScript(edit)}}, {{=formatForJavaScript(urlResults)}})
+									sortMatches(document.getElementById("table_wrapper_{{=group_identifier}}"), {{=formatForJavaScript(matches[group_identifier])}}, {{=formatForJavaScript(group)}}, {{=formatForJavaScript(edit)}}, {{=formatForJavaScript(urlResults)}});
 								</script>
 							</div>
-	<!-- 						{{if not show_past and group_identifier == 'past':}}
-							    <script>
-					    			showOrHideGroupTable(document.getElementById("button_{{=group_identifier}}"),
-					    			document.getElementById("group_{{=group_identifier}}"))
-					    		</script>
-					    	{{pass}} -->
+
 						{{else:}}
 							No matches
 						{{pass}}
