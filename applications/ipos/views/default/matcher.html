@@ -62,7 +62,7 @@
 						{{if len(matches[group_identifier])>0:}}
 							<div id="table_wrapper_{{=group_identifier}}">
 								<script>
-									sortMatches(document.getElementById("table_wrapper_{{=group_identifier}}"), {{=formatForJavaScript(matches[group_identifier])}}, {{=formatForJavaScript(group)}}, {{=formatForJavaScript(edit)}}, {{=formatForJavaScript(urlResults)}});
+									sortMatches({{=formatForJavaScript(matches[group_identifier])}}, {{=formatForJavaScript(group)}}, {{=formatForJavaScript(edit)}}, {{=formatForJavaScript(urlResults)}});
 								</script>
 							</div>
 

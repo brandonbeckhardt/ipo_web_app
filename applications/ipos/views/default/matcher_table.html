@@ -13,7 +13,14 @@
 <div id="table_wrapper_group_{{=group_identifier}}">
 <table id="group_{{=group_identifier}}" class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
     <tr class="mobile_hide">
-    	 <th><label class="mobile_hide">Company Name </label><button onclick="	sortMatches(document.getElementById('table_wrapper_{{=group_identifier}}'), {{=formatForJavaScript(matches)}}, {{=formatForJavaScript(group)}}, {{=formatForJavaScript(edit)}}, {{=formatForJavaScript(urlResults)}});">V</button></th>
+    	 <th><label class="mobile_hide">Company Name </label><button onclick='
+    	 sortMatches(
+    	 	{{=formatForJavaScript(matches)}}, 
+    	 	{{=formatForJavaScript(group)}}, 
+    	 	{{=formatForJavaScript(edit)}}, 
+    	 	{{=formatForJavaScript(urlResults)}}
+    	 	);
+    	 '>V</button></th>
     	 <th><label class="mobile_hide">Company Description</label></th>
         	 {{if group_identifier != 'future':}}
     	 	<th><label class="mobile_hide">Expected IPO Date</label></th>
