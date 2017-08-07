@@ -18,6 +18,7 @@ from UrlHandler import UrlHandler
 from UrlHandler import UrlResults
 from collections import namedtuple
 from data_model.Match import MatchObject
+from operator import itemgetter
 
 import json
 import os
@@ -86,12 +87,12 @@ def matcher():
     else:
         groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future"),("Previous IPOs","past")]
     return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=textInput,edit=edit,
-        show_past=showPast, match_all=match_all, urlResults=urlResults,  formatForJavaScript=formatForJavaScript)
+        show_past=showPast, match_all=match_all, urlResults=urlResults,   jsFormat=jsFormat)
 
 def dumpJson(itm):
     return json.dumps(itm)
 
-def formatForJavaScript(itm):
+def jsFormat(itm):
     return T(json.dumps(itm))
 
  # Will want to change how we send data in the future
@@ -117,18 +118,28 @@ def matcher_table():
     #     or db.url_info.type == UrlTypes.PRIVATE_COMPANY_URL['enum']
     #     or db.url_info.type == UrlTypes.BROKER_URL['enum']) and db.url_info.is_primary==True).select()
     # urlHandler = UrlHandler(urlData, logger)
+    
     matches = None
     if request.vars.has_key('matches') and request.vars['matches']:
         matches = json.loads(request.vars['matches'])
-        logger.info(matches[0])
     group = None
     if request.vars.has_key('group') and request.vars['group']:
         group = json.loads(request.vars['group'])
     # sortBy = request.vars.sortBy
     # add asc
-    logger.info("--")
-    logger.info(group)
-    return dict(matches=matches, group=group, edit=False, urlResults=None, formatForJavaScript=formatForJavaScript)
+
+    if request.vars.has_key('sortBy') and request.vars['sortBy']:
+        sortBy = request.vars['sortBy']
+        reverse=False
+        if request.vars.has_key('order') and request.vars['order']:
+            if request.vars['order'] == 'desc':
+                reverse = True
+
+        logger.info('here')
+        logger.info(matches)
+        matches = sorted(matches, key=itemgetter(sortBy), reverse=reverse)
+
+    return dict(matches=matches, group=group, edit=edit, urlResults=None, jsFormat=jsFormat)
 
 def submit_keyword_input():
     variables={}
