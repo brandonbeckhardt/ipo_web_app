@@ -10,20 +10,23 @@
 
 {{group_label = group[0]}}
 {{group_identifier = group[1]}}
+<script>
+	var sortMatchesForTable = function(sortBy, order, matches, group) {
+		 sortMatches(sortBy,order,matches, group,{{=jsFormat(edit)}},
+    	 {{=jsFormat(urlResults)}});
+	}
+</script>
+
 <div id="table_wrapper_group_{{=group_identifier}}">
 <table id="group_{{=group_identifier}}" class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
     <tr class="mobile_hide">
     	 <th><label class="mobile_hide">Company Name </label><button onclick='
-    	 sortMatches(
-    	 	{{=formatForJavaScript(matches)}}, 
-    	 	{{=formatForJavaScript(group)}}, 
-    	 	{{=formatForJavaScript(edit)}}, 
-    	 	{{=formatForJavaScript(urlResults)}}
-    	 	);
-    	 '>V</button></th>
-    	 <th><label class="mobile_hide">Company Description</label></th>
+    	 sortMatches("companyName","asc",{{=jsFormat(matches)}},{{=jsFormat(group)}});'>V</button></th>
+    	 <th><label class="mobile_hide">Company Description</label><button onclick='
+    	 sortMatches("description","asc",{{=jsFormat(matches)}},{{=jsFormat(group)}});'>V</button></th>
         	 {{if group_identifier != 'future':}}
-    	 	<th><label class="mobile_hide">Expected IPO Date</label></th>
+    	 	<th><label class="mobile_hide">Expected IPO Date</label><button onclick='
+    	 sortMatches("ipoDate","asc",{{=jsFormat(matches)}},{{=jsFormat(group)}});'>V</button></th>
     	 {{pass}}
     	 <th><label class="mobile_hide">Matched Key Words</label></th>
     	 {{if edit:}}
