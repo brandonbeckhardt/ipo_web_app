@@ -14,7 +14,7 @@ label{
 .text_input{
   width: 90%;
 }
-#text_input_helper {
+#text_input_helper div{
 	margin-bottom: 5px;
 	margin-top: 5px;
 	padding: 10px;
