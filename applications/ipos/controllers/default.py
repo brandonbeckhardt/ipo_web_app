@@ -118,7 +118,7 @@ def matcher_table():
     #     or db.url_info.type == UrlTypes.PRIVATE_COMPANY_URL['enum']
     #     or db.url_info.type == UrlTypes.BROKER_URL['enum']) and db.url_info.is_primary==True).select()
     # urlHandler = UrlHandler(urlData, logger)
-    
+
     matches = None
     if request.vars.has_key('matches') and request.vars['matches']:
         matches = json.loads(request.vars['matches'])
@@ -128,18 +128,32 @@ def matcher_table():
     # sortBy = request.vars.sortBy
     # add asc
 
+    #Sort to default specs
+    sortInfo = {"sortBy":"companyName", "order":"none"}
+    matches = sorted(matches, key=itemgetter(sortInfo["sortBy"]))
+
     if request.vars.has_key('sortBy') and request.vars['sortBy']:
-        sortBy = request.vars['sortBy']
-        reverse=False
         if request.vars.has_key('order') and request.vars['order']:
-            if request.vars['order'] == 'desc':
-                reverse = True
+            # Only change default if we're specifically ordering something
+            if request.vars['order'] == 'asc' :
+                sortInfo["sortBy"] = request.vars['sortBy']
+                sortInfo["order"] = 'asc'
+                matches = sorted(matches, key=itemgetter(sortInfo["sortBy"]))
+            elif request.vars['order'] == 'desc':
+                sortInfo["sortBy"] = request.vars['sortBy']
+                sortInfo["order"] = 'desc'
+                matches = sorted(matches, key=itemgetter(sortInfo["sortBy"]), reverse=True)
+        
+    return dict(matches=matches, group=group, edit=edit, urlResults=None, sortInfo=sortInfo, 
+        sortButtonSign=sortButtonSign,jsFormat=jsFormat)
 
-        logger.info('here')
-        logger.info(matches)
-        matches = sorted(matches, key=itemgetter(sortBy), reverse=reverse)
+def sortButtonSign(column, sortInfo):
+    sortSigns={'none':'', 'asc':"&#9660;", 'desc': "&#9650;"}
+    if sortInfo['sortBy'] == column:
+        return sortSigns[sortInfo['order']]
+    else:
+        return sortSigns['none']
 
-    return dict(matches=matches, group=group, edit=edit, urlResults=None, jsFormat=jsFormat)
 
 def submit_keyword_input():
     variables={}
