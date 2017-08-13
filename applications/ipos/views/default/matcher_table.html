@@ -5,34 +5,35 @@
 {{response.files.append(URL('static','js/ipo.js'))}}
 {{include 'web2py_ajax.html'}}
 <head>
-  <meta charset="UTF-8">
+  <!-- <meta charset="UTF-8"> -->
 </head>
 
 {{group_label = group[0]}}
 {{group_identifier = group[1]}}
-<script>
-	var sortMatchesForTable = function(sortBy, order, matches, group) {
-		 sortMatches(sortBy,order,matches, group,{{=jsFormat(edit)}},
-    	 {{=jsFormat(urlResults)}});
-	}
-</script>
 
 <div id="table_wrapper_group_{{=group_identifier}}">
 <table id="group_{{=group_identifier}}" class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
     <tr class="mobile_hide">
-    	 <th><label class="mobile_hide">Company Name </label><button onclick='
-    	 sortMatches("companyName","asc",{{=jsFormat(matches)}},{{=jsFormat(group)}});'>V</button></th>
-    	 <th><label class="mobile_hide">Company Description</label><button onclick='
-    	 sortMatches("description","asc",{{=jsFormat(matches)}},{{=jsFormat(group)}});'>V</button></th>
-        	 {{if group_identifier != 'future':}}
-    	 	<th><label class="mobile_hide">Expected IPO Date</label><button onclick='
-    	 sortMatches("ipoDate","asc",{{=jsFormat(matches)}},{{=jsFormat(group)}});'>V</button></th>
-    	 {{pass}}
+    	 <th>
+	    	 <label class="mobile_hide">Company Name </label>
+	    	 <button onclick='
+	    	 sortMatches(this, "companyName",{{=jsFormat(matches)}},{{=jsFormat(group)}});' value='{{=sortButtonSign("companyName",sortInfo)}}'>{{=XML(sortButtonSign('companyName',sortInfo))}}</button>
+    	 </th>
+    	 <th>
+	    	 <label class="mobile_hide">Company Description</label><button onclick='
+	    	 sortMatches(this, "description",{{=jsFormat(matches)}},{{=jsFormat(group)}});'  value='{{=sortButtonSign("description",sortInfo)}}'>{{=XML(sortButtonSign('description',sortInfo))}}</button>
+    	 </th>
+        {{if group_identifier != 'future':}}
+    	 	<th>
+	    	 	<label class="mobile_hide">Expected IPO Date</label><button onclick='
+	    	 sortMatches(this, "ipoDate",{{=jsFormat(matches)}},{{=jsFormat(group)}});'  value='{{=sortButtonSign("ipoDate",sortInfo)}}'>{{=XML(sortButtonSign('ipoDate',sortInfo))}}</button>
+    	 	</th>
+    	{{pass}}
     	 <th><label class="mobile_hide">Matched Key Words</label></th>
-    	 {{if edit:}}
+    	{{if edit:}}
     	 	<th></th>
     	 	<th></th>
-    	 {{pass}}
+    	{{pass}}
     </tr>
 
 	{{for match in matches:}}
