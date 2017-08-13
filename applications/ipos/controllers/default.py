@@ -78,7 +78,10 @@ def matcher():
     
     urlHandler = UrlHandler(urlData, logger)
     matches = DataMatcher(textInput,match_all,companyData, logger).matches
-    groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future"),("Previous IPOs","past")]
+    if len(matches["this_week"])==0 and len(matches["next_week"])==0 and len(matches["future"])==0 and len(matches["past"])>0 :
+        groups=[("Previous IPOs","past"),("This Week", "this_week"),("Next Week","next_week"),("Future","future")]
+    else:
+        groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future"),("Previous IPOs","past")]
     return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=textInput,edit=edit,
         show_past=showPast, urlHandler=urlHandler,match_all=match_all)
 
