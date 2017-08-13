@@ -1,8 +1,9 @@
-{{response.files.append(URL('static','css/ipo.css'))}}
 {{response.files.append(URL('static','js/jquery-2.2.2.min.js'))}}
+{{response.files.append(URL('static','css/ipo.css'))}}
 {{response.files.append(URL('static','bootstrap/css/bootstrap.min.css'))}}
 {{response.files.append(URL('static','bootstrap/ipo.css'))}}
 {{response.files.append(URL('static','js/ipo.js'))}}
+
 {{include 'web2py_ajax.html'}}
 
 <head>
@@ -31,14 +32,16 @@
 		<h2>{{=message}}</h2>
 	{{pass}}
 	<div class="row">
-		<form action="submit_keyword_input" method="post">
-			<div class="col-sm-3">
-				<textarea id="text_input" name="text_input" rows="10">{{=text_area_input}}</textarea>
-				<button type="submit" name="post_form" value="submit" class="btn btn-primary">Submit</button>
-				<button type="submit" name="post_form" value="match_all" class="btn btn-primary">Search All Upcoming IPOs</button>
-		
-			</div>
-		</form>
+		<div class="col-sm-3">
+			<form action="submit_keyword_input" method="post">
+				<textarea id="text_input" class="text_input" name="text_input" rows="10">{{=text_area_input}}</textarea>
+				{{if match_all:}}
+					<div id="text_input_helper" class="text_input well">Use the words above or enter your own to search for companies that match those key words!</div>
+				{{pass}}
+				<button type="submit" name="post_form" value="submit" class="btn btn-primary">Search Key Words</button>
+				<button type="submit" name="post_form" value="match_all" class="btn btn-primary">Search All</button>
+			</form>
+		</div>
 		<div class="col-sm-9"> 
 		    <!-- LOCAL INFORMATION -->
 		    {{if edit:}}

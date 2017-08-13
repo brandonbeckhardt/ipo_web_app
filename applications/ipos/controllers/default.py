@@ -64,6 +64,7 @@ def matcher():
         filepath = os.path.join(request.folder, 'uploads', 'keyWords.txt')
         with open(filepath, 'r') as text_input_file:
             textInput = text_input_file.read()
+            match_all = True
 
     time_to_expire = 60*60*24 #cache daily 
 
@@ -79,7 +80,7 @@ def matcher():
     matches = DataMatcher(textInput,match_all,companyData, logger).matches
     groups=[("This Week", "this_week"),("Next Week","next_week"),("Future","future"),("Previous IPOs","past")]
     return dict(message=T('IPO Matcher'),matches=matches,groups=groups,text_area_input=textInput,edit=edit,
-        show_past=showPast, urlHandler=urlHandler)
+        show_past=showPast, urlHandler=urlHandler,match_all=match_all)
 
 
 def submit_keyword_input():

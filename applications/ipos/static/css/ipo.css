@@ -8,11 +8,19 @@ body{
 label{
 	margin-right: 10px;
 }
-#text_input{
+#text_input { 
+	height: 80%;
+ }
+.text_input{
   width: 90%;
-  height: 80%;
 }
-
+#text_input_helper {
+	margin-bottom: 5px;
+	margin-top: 5px;
+	padding: 10px;
+    text-align: center;
+    background: #b2ffb2;
+}
 div.matcher_container{
 	width: 95%;
 }
