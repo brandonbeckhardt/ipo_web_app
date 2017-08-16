@@ -41,6 +41,22 @@ div.matcher_container{
     margin-bottom: 70pt; 
     margin-top: 40pt; 
 }
+.sort_button {
+	/*background: none;*/
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: none;
+}
+.sort_button:focus {
+  outline: none;
+}
+.sort_button:hover {
+    cursor: pointer; cursor: hand; 
+}
+.sort_button>span {
+	font-size: .7em;
+}
 	
 .pricing{
 	display:block;
@@ -103,10 +119,10 @@ div.matcher_container{
 }
 
 .generic_table>tbody>tr>td{
-	border:none;
+	/*border:none;*/
 }
 .generic_table>tbody>tr>th{
-	border:none;
+	/*border:none;*/
 	text-align: center;
 }
 .generic_table{
@@ -142,9 +158,7 @@ div.matcher_container{
   width: 100%; 
   border-collapse: collapse; 
 }
-.responsive_table button{
-	width: auto;
-}
+
 .save_for_later_or_delete{
 	width: auto;
 
