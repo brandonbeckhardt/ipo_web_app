@@ -1,9 +1,9 @@
 {{response.files.append(URL('static','js/jquery-2.2.2.min.js'))}}
-{{response.files.append(URL('static','css/ipo.css'))}}
+
 {{response.files.append(URL('static','bootstrap/css/bootstrap.min.css'))}}
 {{response.files.append(URL('static','bootstrap/ipo.css'))}}
 {{response.files.append(URL('static','js/ipo.js'))}}
-
+{{response.files.append(URL('static','css/ipo.css'))}}
 {{include 'web2py_ajax.html'}}
 
 <!DOCTYPE html>
@@ -62,7 +62,7 @@
 						{{if len(matches[group_identifier])>0:}}
 							<div id="table_wrapper_{{=group_identifier}}">
 								<script>
-									sortMatches(null, null,{{=jsFormat(matches[group_identifier])}}, {{=jsFormat(group)}}, {{=jsFormat(edit)}}, {{=jsFormat(urlResults)}});
+									sortMatches(null, null,{{=jsFormat(matches[group_identifier])}}, {{=jsFormat(group)}}, {{=jsFormat(edit)}});
 								</script>
 							</div>
 
