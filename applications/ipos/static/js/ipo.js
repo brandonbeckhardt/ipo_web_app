@@ -9,13 +9,14 @@ var showOrHideGroupTable = function(button, table) {
 }
 
 
-var loadMatchesToJavaScript = function(matches, groups) {
+var loadMatchesToJavaScript = function(matches, groups, edit) {
     allMatchesGlobal = matches;
     allGroupsGlobal = groups;
+    globalEdit = edit;
 }
 
 
-var sortMatches = function(button, sortBy, groupIdentifier, edit, urlHandler) {
+var sortMatches = function(button, sortBy, groupIdentifier) {
     var order = 'none';
     if (button != null) {
         if (button.value == '&#9660;') { //already downcarrot (ascending)
@@ -32,10 +33,9 @@ var sortMatches = function(button, sortBy, groupIdentifier, edit, urlHandler) {
     }
     var matches = allMatchesGlobal[groupIdentifier];
 
-    if (edit == null) edit = false;
     $.ajax({type:'POST',url: "default/matcher_table", 
-        data: {'edit':edit, 'matches':JSON.stringify(matches),  
-        'group': JSON.stringify(group), 'urlHandler':urlHandler,
+        data: {'edit':globalEdit, 'matches':JSON.stringify(matches),  
+        'group': JSON.stringify(group), 'urlResults':null,
         'sortBy':sortBy, 'order':order},
         success: function(result){
             var groupIdentifier = group[1]

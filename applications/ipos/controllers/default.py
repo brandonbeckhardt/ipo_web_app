@@ -114,11 +114,6 @@ def matcher_table():
     if request.post_vars.has_key('edit') and request.post_vars['edit'] == "true" and authenticated:
         edit=True
 
-    # urlData = db((db.url_info.type == UrlTypes.PUBLIC_COMPANY_URL['enum'] 
-    #     or db.url_info.type == UrlTypes.PRIVATE_COMPANY_URL['enum']
-    #     or db.url_info.type == UrlTypes.BROKER_URL['enum']) and db.url_info.is_primary==True).select()
-    # urlHandler = UrlHandler(urlData, logger)
-
     matches = None
     if request.post_vars.has_key('matches') and request.post_vars['matches']:
         matches = json.loads(request.post_vars['matches'])

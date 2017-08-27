@@ -30,7 +30,7 @@
 	  });
 	</script>
 	<script>
-		loadMatchesToJavaScript({{=jsFormat(matches)}}, {{=jsFormat(groups)}});
+		loadMatchesToJavaScript({{=jsFormat(matches)}}, {{=jsFormat(groups)}}, {{=jsFormat(edit)}});
 	</script>
 </head>
 
@@ -65,7 +65,7 @@
 						{{if len(matches[group_identifier])>0:}}
 							<div id="table_wrapper_{{=group_identifier}}">
 								<script>
-									sortMatches(null, null, '{{=group_identifier}}', {{=jsFormat(edit)}});
+									sortMatches(null, null, '{{=group_identifier}}');
 								</script>
 							</div>
 
