@@ -27,7 +27,6 @@ var sortMatches = function(button, sortBy, groupIdentifier, edit, urlHandler) {
         }
     }
     var group = getGroupFromIdentifier(groupIdentifier);
-    console.log(groupIdentifier);
     if (group == null) {
         return null;
     }
