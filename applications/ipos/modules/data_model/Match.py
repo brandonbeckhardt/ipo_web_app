@@ -1,15 +1,21 @@
 from DateHandling import DateHandling
 
 class MatchObject:
-	def __init__(self, companyInfo, keyWords):
-		self.companyName = None
-		self.ticker = None
-		self.description = None
-		self.companyId = None
-		self.keyWordMatches = None
-		self.ipoDate = None
+	def __init__(self, companyInfo, keyWords, dictToTransform):
 
-		self.populateInfo(companyInfo, keyWords)
+		if dictToTransform is None:
+			self.companyName = None
+			self.ticker = None
+			self.description = None
+			self.companyId = None
+			self.keyWordMatches = None
+			self.ipoDate = None
+
+			self.populateInfo(companyInfo, keyWords)
+		else:
+			# In future want to ensure these values are part of object
+			for key in dictToTransform:
+				setattr(self, key, dictToTransform[key])
 
 	def populateInfo(self, companyInfo, keyWords):
 		self.companyName = companyInfo.company_info.name

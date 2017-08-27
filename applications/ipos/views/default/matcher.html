@@ -1,12 +1,16 @@
 {{response.files.append(URL('static','js/jquery-2.2.2.min.js'))}}
-{{response.files.append(URL('static','css/ipo.css'))}}
+
 {{response.files.append(URL('static','bootstrap/css/bootstrap.min.css'))}}
 {{response.files.append(URL('static','bootstrap/ipo.css'))}}
 {{response.files.append(URL('static','js/ipo.js'))}}
-
+{{response.files.append(URL('static','css/ipo.css'))}}
 {{include 'web2py_ajax.html'}}
 
+<!DOCTYPE html>
+
 <head>
+  <meta charset="UTF-8">
+  <?xml version="1.0"?>
 	<!-- Google Analytics -->
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -24,6 +28,9 @@
 	    google_ad_client: "ca-pub-2586492056617449",
 	    enable_page_level_ads: true
 	  });
+	</script>
+	<script>
+		loadMatchesToJavaScript({{=jsFormat(matches)}}, {{=jsFormat(groups)}}, {{=jsFormat(edit)}});
 	</script>
 </head>
 
@@ -54,60 +61,14 @@
 			 	<div class="well">
 				    <h3 class="group_label">{{=group_label}}</h3>
 				    <button id="button_{{=group_identifier}}" class="showOrHideGroupButton btn btn-primary" onclick="showOrHideGroupTable(this,group_{{=group_identifier}})">-</button>
-				    {{if matches and group_identifier in matches.keys():}}
+				    {{if matches and group_identifier in matches:}}
 						{{if len(matches[group_identifier])>0:}}
-							<table id="group_{{=group_identifier}}" class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
-					            <tr class="mobile_hide">
-					            	 <th><label class="mobile_hide">Company Name </label></th>
-					            	 <th><label class="mobile_hide">Company Description</label></th>
-        	 		            	 {{if group_identifier != 'future':}}
-					            	 	<th><label class="mobile_hide">Expected IPO Date</label></th>
-					            	 {{pass}}
-					            	 <th><label class="mobile_hide">Matched Key Words</label></th>
-					            	 {{if edit:}}
-					            	 	<th></th>
-					            	 	<th></th>
-					            	 {{pass}}
-					            </tr>
-								{{for match in matches[group_identifier]:}}
-									<tr>
-										<td>
-										<label class="mobile_show">Company Name</label>
-										{{companyUrl = urlHandler.getCompanyUrl(group_identifier,match)}}
-										{{if companyUrl != "":}}
-											<a target="_blank" href={{=companyUrl}}>{{=match.companyName}} </a>
-										{{else:}}
-											{{=match.companyName}}
-										{{pass}}
-										</td>
-										<td><label class="mobile_show">Company Description </label><p class="company_description">{{=match.description}}</p></td>
-										{{if group_identifier != 'future':}}
-											<td><label class="mobile_show">Expected IPO Date</label>{{=match.ipoDate}}</td>
-										{{pass}}
-										<td><label class="mobile_show">Matched Key Words </label>{{for idx, keyWord in enumerate(match.keyWordMatches):}}
-												{{=keyWord}}{{if idx != len(match.keyWordMatches)-1:}},{{pass}}
-											{{pass}}
-										</td>
-										 {{if edit:}}
-					            	 	<td>
-					            			<a href="edit/add_company/{{=match.companyId}}"><button type="button" class="btn btn-primary">Edit</button></a>
-										</td>
-										<td>
-											<form action="edit/delete_company" method="post">
-					            				<button type="submit" name="uuid" value="{{=match.companyId}}" class="btn btn-primary">X</button>
-					            			</form>
-										</td>
-					            	 	{{pass}}
-									</tr>
-								{{pass}}
-							</table>
+							<div id="table_wrapper_{{=group_identifier}}">
+								<script>
+									sortMatches(null, null, '{{=group_identifier}}');
+								</script>
+							</div>
 
-	<!-- 						{{if not show_past and group_identifier == 'past':}}
-							    <script>
-					    			showOrHideGroupTable(document.getElementById("button_{{=group_identifier}}"),
-					    			document.getElementById("group_{{=group_identifier}}"))
-					    		</script>
-					    	{{pass}} -->
 						{{else:}}
 							No matches
 						{{pass}}

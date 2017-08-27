@@ -11,22 +11,19 @@ class UrlHandler:
 	def __init__(self, urlRows, logger):
 		self.urlRows = urlRows
 		self.logger = logger
-		self.privateCompanyUrls = {}
-		self.publicCompanyUrls = {}
-		self.brokerUrls = {}
-		self.otherUrls = {}
-
+		self.urlResults = UrlResults()
 		self.handleUrls()
 
 
 	def handleUrls(self):
 		for row in self.urlRows:
 			if row.type == UrlTypes.PUBLIC_COMPANY_URL['enum']:
-				self.publicCompanyUrls[row.reference_id] = row
+				self.urlResults.publicCompanyUrls[row.reference_id] = row.__dict__
 			elif row.type == UrlTypes.PRIVATE_COMPANY_URL['enum']:
-				self.privateCompanyUrls[row.reference_id] = row
+				self.urlResults.privateCompanyUrls[row.reference_id] = row.__dict__
 			elif row.type == UrlTypes.BROKER_URL['enum']:
-				self.brokerUrls[row.reference_id] = row
+				self.urlResults.brokerUrls[row.reference_id] = row.__dict__
+
 
 	def getCompanyUrl(self, group, match):
 		url = ""
@@ -43,5 +40,13 @@ class UrlHandler:
 					url = "http://www." + url
 		return url
 
+	def getResultsAsDict(self):
+		return self.urlResults.__dict__
 
+class UrlResults():
+	def __init__(self):
+		self.privateCompanyUrls = {}
+		self.publicCompanyUrls = {}
+		self.brokerUrls = {}
+		self.otherUrls = {}
 
