@@ -16,21 +16,21 @@
 <table id="group_{{=group_identifier}}" class = "responsive_table generic_table table table-bordered table-hover ipo_table" >
     <tr class="mobile_hide">
     	 <th>
-	    	 <button class="sort_button mobile_hide" onclick='
-	    	 sortMatches(this, "companyName",{{=jsFormat(matches)}},{{=jsFormat(group)}});' value='{{=sortButtonSign("companyName",sortInfo)}}'>
+	    	 <button class="sort_button mobile_hide" onclick="sortMatches(this, 'companyName','{{=group_identifier}}')" 
+	    	 value='{{=sortButtonSign("companyName",sortInfo)}}'>
 	    	 	Company Name <span>{{=XML(sortButtonSign('companyName',sortInfo))}}</span>
     	 	</button>
     	 </th>
     	 <th>
-	    	 <button class="sort_button mobile_hide" onclick='
-	    	 sortMatches(this, "description",{{=jsFormat(matches)}},{{=jsFormat(group)}});'  value='{{=sortButtonSign("description",sortInfo)}}'>
+	    	 <button class="sort_button mobile_hide" onclick="sortMatches(this, 'description','{{=group_identifier}}')"
+	    	 value='{{=sortButtonSign("description",sortInfo)}}'>
 	    	 	Company Description <span>{{=XML(sortButtonSign('description',sortInfo))}}</span>
 	    	 </button>
     	 </th>
         {{if group_identifier != 'future':}}
     	 	<th>
-	    	 	<button class="sort_button mobile_hide" onclick='
-	    	 sortMatches(this, "ipoDate",{{=jsFormat(matches)}},{{=jsFormat(group)}});'  value='{{=sortButtonSign("ipoDate",sortInfo)}}'>
+	    	 	<button class="sort_button mobile_hide" onclick="sortMatches(this, 'ipoDate','{{=group_identifier}}')"
+	    	 	value='{{=sortButtonSign("ipoDate",sortInfo)}}'>
 	    	 	Expected IPO Date <span>{{=XML(sortButtonSign('ipoDate',sortInfo))}}</span>
 	    	 	</button>
     	 	</th>
@@ -41,7 +41,9 @@
     	 	<th></th>
     	{{pass}}
     </tr>
+    <script>
 
+	</script>
 	{{for match in matches:}}
 		<tr>
 			<td>

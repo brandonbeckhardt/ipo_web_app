@@ -29,6 +29,9 @@
 	    enable_page_level_ads: true
 	  });
 	</script>
+	<script>
+		loadMatchesToJavaScript({{=jsFormat(matches)}}, {{=jsFormat(groups)}});
+	</script>
 </head>
 
 <div class="matcher_container container">
@@ -62,7 +65,7 @@
 						{{if len(matches[group_identifier])>0:}}
 							<div id="table_wrapper_{{=group_identifier}}">
 								<script>
-									sortMatches(null, null,{{=jsFormat(matches[group_identifier])}}, {{=jsFormat(group)}}, {{=jsFormat(edit)}});
+									sortMatches(null, null, '{{=group_identifier}}', {{=jsFormat(edit)}});
 								</script>
 							</div>
 
