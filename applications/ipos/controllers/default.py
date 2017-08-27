@@ -111,7 +111,7 @@ def matcher_table():
             authenticated = True
 
     edit = False
-    if request.vars.has_key('edit') and request.vars['edit'] == "true" and authenticated:
+    if request.post_vars.has_key('edit') and request.post_vars['edit'] == "true" and authenticated:
         edit=True
 
     # urlData = db((db.url_info.type == UrlTypes.PUBLIC_COMPANY_URL['enum'] 
@@ -120,11 +120,11 @@ def matcher_table():
     # urlHandler = UrlHandler(urlData, logger)
 
     matches = None
-    if request.vars.has_key('matches') and request.vars['matches']:
-        matches = json.loads(request.vars['matches'])
+    if request.post_vars.has_key('matches') and request.post_vars['matches']:
+        matches = json.loads(request.post_vars['matches'])
     group = None
-    if request.vars.has_key('group') and request.vars['group']:
-        group = json.loads(request.vars['group'])
+    if request.post_vars.has_key('group') and request.post_vars['group']:
+        group = json.loads(request.post_vars['group'])
     # sortBy = request.vars.sortBy
     # add asc
 
@@ -132,15 +132,15 @@ def matcher_table():
     sortInfo = {"sortBy":"companyName", "order":"none"}
     matches = sorted(matches, key=itemgetter(sortInfo["sortBy"]))
 
-    if request.vars.has_key('sortBy') and request.vars['sortBy']:
-        if request.vars.has_key('order') and request.vars['order']:
+    if request.post_vars.has_key('sortBy') and request.post_vars['sortBy']:
+        if request.post_vars.has_key('order') and request.post_vars['order']:
             # Only change default if we're specifically ordering something
-            if request.vars['order'] == 'asc' :
-                sortInfo["sortBy"] = request.vars['sortBy']
+            if request.post_vars['order'] == 'asc' :
+                sortInfo["sortBy"] = request.post_vars['sortBy']
                 sortInfo["order"] = 'asc'
                 matches = sorted(matches, key=itemgetter(sortInfo["sortBy"]))
-            elif request.vars['order'] == 'desc':
-                sortInfo["sortBy"] = request.vars['sortBy']
+            elif request.post_vars['order'] == 'desc':
+                sortInfo["sortBy"] = request.post_vars['sortBy']
                 sortInfo["order"] = 'desc'
                 matches = sorted(matches, key=itemgetter(sortInfo["sortBy"]), reverse=True)
         
