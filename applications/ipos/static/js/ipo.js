@@ -21,7 +21,7 @@ var sortMatches = function(button, sortBy, matches, group, edit, urlHandler) {
     }
 
     if (edit == null) edit = false;
-    $.ajax({url: "default/matcher_table", 
+    $.ajax({type:'POST',url: "default/matcher_table", 
         data: {'edit':edit, 'matches':JSON.stringify(matches),  
         'group': JSON.stringify(group), 'urlHandler':urlHandler,
         'sortBy':sortBy, 'order':order},
